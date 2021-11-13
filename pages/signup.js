@@ -1,12 +1,9 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, signInWithCustomToken } from "firebase/auth";
-import { getAuth, signOut } from "firebase/auth";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -18,25 +15,21 @@ const firebaseConfig = {
     appId: "1:744292159993:web:866b078a19b17b2d21ad28",
     measurementId: "G-3ZNXNEQ38Z"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
-
+const auth = getAuth();
 var resultView = new Vue({
-    el: '#app',
+    el: '#signUp',
     data: {
-        auth: getAuth(),
         name: null,
         email: null,
         password: null
     },
     methods: {
         signUpUser: function(){
-
-
-            createUserWithEmailAndPassword(this.auth, this.email, this.password)
+            console.log("hi")
+            createUserWithEmailAndPassword(auth, this.email, this.password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
@@ -45,6 +38,7 @@ var resultView = new Vue({
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                console.log(errorMessage + " " + errorCode)
                 // ..
             });
 
