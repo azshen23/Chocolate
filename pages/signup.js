@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
-import "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+import {getDatabase, ref, set} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 // Your web app's Firebase configuration
@@ -21,6 +21,17 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth();
 
+//if logged in, redirect to activity page
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      location.href= 'profile.html'
+    } else {
+      
+    }
+  }); 
+
+
 var resultView = new Vue({
     el: '#signUp',
     data: {
@@ -30,23 +41,45 @@ var resultView = new Vue({
     },
     methods: {
         signUpUser: function(){
-            console.log("hi")
             createUserWithEmailAndPassword(auth, this.email, this.password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                location.href = 'login.html';
+                updateProfile(auth.currentUser, {
+                    displayName: this.name
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorMessage + " " + errorCode)
+                })
+
+                writeUserData(user.uid, this.name, this.email)
+
+
+
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorMessage + " " + errorCode)
-                // ..
             });
 
         }
     }
 })
+
+
+//add user to datatbase
+function writeUserData(userId, name, email) {
+    const db = getDatabase();
+    set(ref(db, 'users/' + userId), {
+      name: name,
+      email: email
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+}
 
 
 

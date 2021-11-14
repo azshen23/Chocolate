@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
-import { getAuth} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+import { getAuth, signOut} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 import "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 
 const firebaseConfig = {
@@ -33,6 +33,17 @@ var resultView = new Vue({
     data: {
     },
     methods: {
-
+      //once user signout, the token should be cleared and they should be redirected to the login page
+      signOut: function(){
+        signOut(auth).then(() => {
+          location.href = "login.html"
+        }).catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorMessage + " " + errorCode)
+        });
+      }
     }
 })
+
+
