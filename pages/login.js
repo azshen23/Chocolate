@@ -30,7 +30,7 @@ onAuthStateChanged(auth, (user) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     const uid = user.uid;
-    setTimeout(location.href = 'signup.html', 2000);
+    setTimeout(location.href = 'activity.html', 2000);
     // ...
   } else {
     // User is signed out
@@ -45,22 +45,7 @@ var resultView = new Vue({
 
     },
     methods: {
-        getArtists: function () {
-            axios.get("https://itunes.apple.com/search?term=" + this.artistNameSearch + "&origin=*")
-                .then(response => {
-                    if (response.data.resultCount == 0) {
-                        alert("No results found")
-                    }
-                    else {
-                        this.resultCount = response.data.resultCount;
-                        this.filteredResults = response.data.results;
-                        this.results = response.data.results;
-                    }
-                    console.log(response.data)
-
-                })
-                .then(this.loaded = true);
-        }
+        
     }
 })
 
