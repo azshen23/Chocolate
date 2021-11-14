@@ -25,7 +25,9 @@ const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-      location.href= 'profile.html'
+      setTimeout(function(){
+          location.href= 'profile.html'
+        }, 500)
     } else {
       
     }
@@ -45,6 +47,7 @@ var resultView = new Vue({
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
+                writeUserData(user.uid, this.name, this.email)
                 updateProfile(auth.currentUser, {
                     displayName: this.name
                 }).catch((error) => {
@@ -53,9 +56,7 @@ var resultView = new Vue({
                     console.log(errorMessage + " " + errorCode)
                 })
 
-                writeUserData(user.uid, this.name, this.email)
-
-
+                
 
             })
             .catch((error) => {

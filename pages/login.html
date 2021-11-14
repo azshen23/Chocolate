@@ -3,18 +3,24 @@
 
 <head>
   <title>Chocolate</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 
 <body>
   <div id="logIn">
-    <p>
-      <input type="text" name="username" placeholder="Enter your email" required />
-    </p>
-    <p>
-      <input type="password" name="password" placeholder="Enter your password" required />
-    </p>
-    <p><input type="submit" value="login" /></p>
+    <p>Email <input type="text" v-model="email" required /></p>
+    <p>Password <input type="password" v-model="password" required /></p>
+    <button class="login" v-on:click="signin" value="sign up">Login</button>
     <input type="hidden" name="operation" value="login" />
     <p>
       Don't have an account?
