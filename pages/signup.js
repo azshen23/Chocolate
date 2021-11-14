@@ -75,7 +75,8 @@ function writeUserData(userId, name, email) {
     const db = getDatabase();
     set(ref(db, 'users/' + userId), {
       name: name,
-      email: email
+      email: email,
+      currentTaskID: -1
     })
     .catch((error) => {
         console.log(error.message)
