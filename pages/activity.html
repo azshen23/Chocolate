@@ -43,7 +43,7 @@
         <hr>
 
         <button v-on:click="getTasks" >get Tasks</button>
-        <p>{{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
+        <p v-on:click ="searchMap(allTasks[task1]['location'])">{{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
         <p>{{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
         <p>{{allTasks[task3]['description']}} {{allTasks[task3]['points']}} points</p>
 

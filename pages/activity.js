@@ -51,6 +51,7 @@ var resultView = new Vue({
       },
       getTasks: function() {
         console.log("DAWD")
+        console.log(resultView.task1);
         let counter = 0;
         while(counter < 3) {
           let num = Math.floor(Math.random() * 51);
@@ -74,6 +75,10 @@ var resultView = new Vue({
           }
         }
       },
+      searchMap: function(location) {
+        console.log(location);
+      },
     }
 })
+
 resultView.setTasks();
