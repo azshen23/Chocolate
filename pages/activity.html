@@ -14,16 +14,42 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="activity.css">
+    
 </head>
 
 <body>
     <div id="activity">
         <!-- TODO PUT UR STUFF HERE -->
         This is activity page
+        <header id = "universalHeader">
+            <div class = "activityDiv">
+                <a href="activity.html">
+                    <img img class = "activityIcon" src="../images/homeicon.png" alt="activityIcon">
+                </a>
+            </div>
+            <div class = "leaderboardDiv">
+                <a href="leaderboard.html">
+                    <img class = "leaderboardIcon" src="../images/Golden-Trophy-PNG-Clipart-Background.png" alt="trophyIcon">
+                </a>
+            </div>
+            <div class = "profileDiv">
+                <a href="profile.html">
+                    <img img class = "profileIcon" src="../images/16363.png" alt="profileIcon">
+                </a>
+            </div>
+            
+        </header>
+        <hr>
+
+        <button v-on:click="getTasks" >get Tasks</button>
+        <p>{{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
+        <p>{{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
+        <p>{{allTasks[task3]['description']}} {{allTasks[task3]['points']}} points</p>
+
     </div>
 
 </body>
-<script src="activity.js" type="module"></script>
-
+<script src="activity.js" type = "module"></script>
 
 </html>

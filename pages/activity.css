@@ -1,0 +1,25 @@
+.activityIcon {
+    width: 50px;
+    height: auto;
+}
+
+.leaderboardIcon {
+    width: 50px;
+    height: auto;
+}
+
+.profileIcon {
+    width: 50px;
+    height: auto;
+}
+.activityDiv {
+    text-align: left;
+}
+
+.leaderboardDiv {
+    text-align: center;
+}
+
+.profileDiv {
+    text-align: right;
+}
