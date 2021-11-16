@@ -6,85 +6,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Chocolate</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    <!-- Bootstrap v4.0 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <link rel="stylesheet" href="activity.css">
-    
+
 </head>
 <style>
-    #map{
-      height:400px;
-      width:100%;
-      text-align: left;
+    #map {
+        height: 400px;
+        width: 100%;
+        text-align: left;
     }
-    #popup{
-      /* border: solid #000 10px; */
-      width: 100%;
-      text-align: center;
+
+    #popup {
+        /* border: solid #000 10px; */
+        width: 100%;
+        text-align: center;
     }
-  </style>
+</style>
+
 <body>
     <div id="activity">
         <!-- TODO PUT UR STUFF HERE -->
-        This is activity page
-        <header id = "universalHeader">
-            <div class = "activityDiv">
+        <nav class="navbar navbar-light bg-light" id="universalHeader">
+            <div class="navbar-brand">
                 <a href="activity.html">
-                    <img img class = "activityIcon" src="../images/homeicon.png" alt="activityIcon">
+                    <img img class="activityIcon" src="../images/homeicon.png" alt="activityIcon">
                 </a>
             </div>
-            <div class = "leaderboardDiv">
+            <div class="navbar-brand navbar-center">
                 <a href="leaderboard.html">
-                    <img class = "leaderboardIcon" src="../images/Golden-Trophy-PNG-Clipart-Background.png" alt="trophyIcon">
+                    <img class="leaderboardIcon" src="../images/Golden-Trophy-PNG-Clipart-Background.png"
+                        alt="trophyIcon">
                 </a>
             </div>
-            <div class = "profileDiv">
+            <div class="navbar-brand navbar-right">
                 <a href="profile.html">
-                    <img img class = "profileIcon" src="../images/16363.png" alt="profileIcon">
+                    <img img class="profileIcon" src="../images/16363.png" alt="profileIcon">
                 </a>
             </div>
-            
-        </header>
+        </nav>
         <hr>
 
         <!-- <button v-on:click="getTasks" >get Tasks</button> -->
-        <p v-on:click ="searchMap(task1)" data-toggle="modal" data-target="#exampleModalLong">{{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
-        <p v-on:click = "searchMap(task2)" data-toggle="modal" data-target="#exampleModalLong">{{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
-        <p v-on:click = "searchMap(task3)" data-toggle="modal" data-target="#exampleModalLong">{{allTasks[task3]['description'] || ''}} {{allTasks[task3]['points']}} points</p>
+        <p v-on:click="searchMap(task1)" data-toggle="modal" data-target="#exampleModalLong">
+            {{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
+        <p v-on:click="searchMap(task2)" data-toggle="modal" data-target="#exampleModalLong">
+            {{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
+        <p v-on:click="searchMap(task3)" data-toggle="modal" data-target="#exampleModalLong">
+            {{allTasks[task3]['description'] || ''}} {{allTasks[task3]['points']}} points</p>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLongTitle">Activity Details</h3>
-                </div>
-                <div class="modal-body">
-                    <div id="popup">
-                    <p> Mission: Work out at CCRB. </p>
-                    <button v-on:click.prevent.stop ="closeWindow"> Accept! </button>
-                    <button> Not yet. </button>
-                    <div id="map" ref="map"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLongTitle">Activity Details</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div id="popup">
+                            <p> Mission: Work out at CCRB. </p>
+                            <button> Accept! </button>
+                            <button> Not yet. </button>
+                            <div id="map" ref="map"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            v-on:click="closeWindow">Close</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click = "closeWindow">Close</button>
-                </div>
-            </div>
             </div>
         </div>
     </div>
 </body>
 <script src="activity.js"></script>
 <script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkB6YMvOcViqQrvEgj5vziRyZvp3FG8Xg&libraries=geometry,places&callback=resultView.initMap">
-</script>   
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkB6YMvOcViqQrvEgj5vziRyZvp3FG8Xg&libraries=geometry,places&callback=resultView.initMap">
+    </script>
+
 </html>
