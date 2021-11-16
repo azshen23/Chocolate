@@ -35,6 +35,11 @@
         width: 100%;
         text-align: center;
     }
+
+    .zoom:hover {
+        -webkit-transform: scale(1.5); /* Safari 3-8 */
+        transform: scale(1.5); 
+    }
 </style>
 
 <body>
@@ -43,30 +48,29 @@
         <nav class="navbar navbar-light bg-light" id="universalHeader">
             <div class="navbar-brand">
                 <a href="activity.html">
-                    <img img class="activityIcon" src="../images/homeicon.png" alt="activityIcon">
+                    <img img class="activityIcon zoom" src="../images/home.jpg" alt="activityIcon">
                 </a>
             </div>
             <div class="navbar-brand navbar-center">
                 <a href="leaderboard.html">
-                    <img class="leaderboardIcon" src="../images/Golden-Trophy-PNG-Clipart-Background.png"
+                    <img class="leaderboardIcon zoom" src="../images/Golden-Trophy-PNG-Clipart-Background.png"
                         alt="trophyIcon">
                 </a>
             </div>
             <div class="navbar-brand navbar-right">
                 <a href="profile.html">
-                    <img img class="profileIcon" src="../images/16363.png" alt="profileIcon">
+                    <img img class="profileIcon zoom" src="../images/16363.png" alt="profileIcon">
                 </a>
             </div>
         </nav>
-        <hr>
-
-        <!-- <button v-on:click="getTasks" >get Tasks</button> -->
-        <p v-on:click="searchMap(task1)" data-toggle="modal" data-target="#exampleModalLong">
-            {{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
-        <p v-on:click="searchMap(task2)" data-toggle="modal" data-target="#exampleModalLong">
-            {{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
-        <p v-on:click="searchMap(task3)" data-toggle="modal" data-target="#exampleModalLong">
-            {{allTasks[task3]['description'] || ''}} {{allTasks[task3]['points']}} points</p>
+        <div class="text-center">
+            <p v-on:click="searchMap(task1)" data-toggle="modal" data-target="#exampleModalLong">
+                {{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
+            <p v-on:click="searchMap(task2)" data-toggle="modal" data-target="#exampleModalLong">
+                {{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
+            <p v-on:click="searchMap(task3)" data-toggle="modal" data-target="#exampleModalLong">
+                {{allTasks[task3]['description'] || ''}} {{allTasks[task3]['points']}} points</p>
+        </div>
         <!-- Modal -->
         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
