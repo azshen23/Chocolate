@@ -26,7 +26,7 @@
       width:100%;
       text-align: left;
     }
-    #activity2{
+    #popup{
       /* border: solid #000 10px; */
       width: 100%;
       text-align: center;
@@ -56,34 +56,32 @@
         </header>
         <hr>
 
-        <button v-on:click="getTasks" >get Tasks</button>
+        <!-- <button v-on:click="getTasks" >get Tasks</button> -->
         <p v-on:click ="searchMap(task1)" data-toggle="modal" data-target="#exampleModalLong">{{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
         <p v-on:click = "searchMap(task2)" data-toggle="modal" data-target="#exampleModalLong">{{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
         <p v-on:click = "searchMap(task3)" data-toggle="modal" data-target="#exampleModalLong">{{allTasks[task3]['description'] || ''}} {{allTasks[task3]['points']}} points</p>
-    </div>
-
-     <!-- Modal -->
-     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-        <div class="modal-dialog" role="document">
-           <div class="modal-content">
-              <div class="modal-header">
-                 <h3 class="modal-title" id="exampleModalLongTitle">Activity Details</h3>
-              </div>
-              <div class="modal-body">
-                <div id="activity2">
-                  <p> Mission: Work out at CCRB. </p>
-                  <button> Accept! </button>
-                  <button> Not yet. </button>
-                  <div id="map" ref="map"></div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLongTitle">Activity Details</h3>
                 </div>
-              </div>
-              <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-           </div>
+                <div class="modal-body">
+                    <div id="popup">
+                    <p> Mission: Work out at CCRB. </p>
+                    <button v-on:click.prevent.stop ="closeWindow"> Accept! </button>
+                    <button> Not yet. </button>
+                    <div id="map" ref="map"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click = "closeWindow">Close</button>
+                </div>
+            </div>
+            </div>
         </div>
-     </div>
-
+    </div>
 </body>
 <script src="activity.js"></script>
 <script async defer

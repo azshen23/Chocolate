@@ -31,7 +31,11 @@
 var resultView = new Vue({
   el: '#activity',
   data: {
-    allTasks: [{ 'description': "Go to CCRB0", location: "xyz0", "points": "0" }, { 'description': "Go to CCRB0", location: "xyz0", "points": "0" }, { 'description': "Go to CCRB0", location: "xyz0", "points": "0" }],
+    allTasks: [
+      { description: "Do Leg Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 20 },
+      { description: "Do Chest Workout at CCRB", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 20 },
+      { description: "Go Jogging at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 20 }
+    ],
     task1: 0,
     task2: 1,
     task3: 2,
@@ -40,53 +44,50 @@ var resultView = new Vue({
     map: null,
     infowindow: null,
     service: null,
-    userLocation: null,
     userImage: null,
     userMarker: null,
-    activityLocation: null,
-    actiityMarker: null,
-    placeId: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", // IM Building
+    activityMarker: null,
+    placeId: null, // IM Building
     dstance: null,
+    watchId: null,
   },
   methods: {
-    setTasks: function () {
-      for (let i = 1; i < 50; i++) {
-        this.allTasks.push(
-          {
-            description: "Go to CCRB" + i,
-            location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ",
-            points: i
-          }
-        )
-      }
-    },
-    getTasks: function () {
-      let counter = 0;
-      while (counter < 3) {
-        let num = Math.floor(Math.random() * 51);
-        if (counter == 0) {
-          this.task1 = num;
-          counter++;
-        } else if (counter == 1) {
-          if (this.task1 == num) {
-            console.log("")
-          } else {
-            this.task2 = num;
-            counter++;
-          }
-        } else if (counter == 2) {
-          if (this.task1 == num || this.task2 == num) {
-            console.log("");
-          } else {
-            this.task3 = num;
-            counter++
-          }
-        }
-      }
-    },
+    // setTasks: function () {
+    //   for (let i = 1; i < 50; i++) {
+    //     this.allTasks.push(
+    //       {
+    //         description: "Go to CCRB" + i,
+    //         location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ",
+    //         points: i
+    //       }
+    //     )
+    //   }
+    // },
+    // getTasks: function () {
+    //   let counter = 0;
+    //   while (counter < 3) {
+    //     let num = Math.floor(Math.random() * 51);
+    //     if (counter == 0) {
+    //       this.task1 = num;
+    //       counter++;
+    //     } else if (counter == 1) {
+    //       if (this.task1 == num) {
+    //         console.log("")
+    //       } else {
+    //         this.task2 = num;
+    //         counter++;
+    //       }
+    //     } else if (counter == 2) {
+    //       if (this.task1 == num || this.task2 == num) {
+    //         console.log("");
+    //       } else {
+    //         this.task3 = num;
+    //         counter++
+    //       }
+    //     }
+    //   }
+    // },
     searchMap: function (index) {
-      console.log(location);
-      console.log(this.allTasks[index]['location'])
       // update placeID
       this.placeId = this.allTasks[index]['location'];
       // shows the activity marker on map
@@ -123,7 +124,7 @@ var resultView = new Vue({
       // check if geolocation is supported
       if (navigator.geolocation) {
         // automatically updates user's location
-        navigator.geolocation.watchPosition(
+        this.watchId = navigator.geolocation.watchPosition(
           (position) => { // on success
             const pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             this.updateUserMarker(pos, this.destination);
@@ -143,6 +144,7 @@ var resultView = new Vue({
     },
 
     updateUserMarker: function (user_pos, dest_pos) {
+      console.log("update position");
       // if first time setting user position not set
       if (!this.userMarker) {
         // initialize marker for user
@@ -162,7 +164,7 @@ var resultView = new Vue({
         // update user's position on map
         this.userMarker.setPosition(user_pos);
       }
-      // returns distance between user and destination in METERS
+      // returns distance between user and destination in MILES
       this.distance = google.maps.geometry.spherical.computeDistanceBetween(user_pos, dest_pos) / 1609;
     },
 
@@ -192,9 +194,10 @@ var resultView = new Vue({
         animation: google.maps.Animation.DROP,
         title: "Activity",
       });
+      // recompute distance between user and activity
+      // this.distance = google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.position, place.geometry.location) / 1609;
       // refocus map
       if (place.geometry.viewport) {
-        console.log('hello')
         this.map.fitBounds(place.geometry.viewport);
       } else {
         this.map.setCenter(place.geometry.location);
@@ -230,6 +233,21 @@ var resultView = new Vue({
       });
     },
 
+    closeWindow: function () {
+      // close info windows
+      this.infowindow.close();
+      // clear listener
+      google.maps.event.clearInstanceListeners(this.activityMarker);
+      // clear activity marker
+      this.activityMarker.setMap(null);
+      this.activityMarker = null;
+      // stop tracking user
+      navigator.geolocation.clearWatch(this.watchId);
+      // clear user marker
+      this.userMarker.setMap(null);
+      this.userMarker = null;
+    },
+
     showError: function (error) {
       switch(error.code) {
         case error.PERMISSION_DENIED:
@@ -250,4 +268,4 @@ var resultView = new Vue({
   }
 })
 
-resultView.setTasks();
+//resultView.setTasks();
