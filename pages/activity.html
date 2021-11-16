@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Chocolate</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -17,7 +20,19 @@
     <link rel="stylesheet" href="activity.css">
     
 </head>
-
+<style>
+    #map{
+      height:400px;
+      width:100%;
+      text-align: left;
+    }
+    #activity2{
+      /* border: solid #000 10px; */
+      position: absolute;
+      width: 50%;
+      text-align: center;
+    }
+  </style>
 <body>
     <div id="activity">
         <!-- TODO PUT UR STUFF HERE -->
@@ -43,13 +58,36 @@
         <hr>
 
         <button v-on:click="getTasks" >get Tasks</button>
-        <p v-on:click ="searchMap(allTasks[task1]['location'])">{{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
-        <p>{{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
-        <p>{{allTasks[task3]['description']}} {{allTasks[task3]['points']}} points</p>
-
+        <p v-on:click ="searchMap(task1)" data-toggle="modal" data-target="#exampleModalLong">{{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
+        <p v-on:click = "searchMap(task2)" data-toggle="modal" data-target="#exampleModalLong">{{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
+        <p v-on:click = "searchMap(task3)" data-toggle="modal" data-target="#exampleModalLong">{{allTasks[task3]['description'] || ''}} {{allTasks[task3]['points']}} points</p>
     </div>
 
-</body>
-<script src="activity.js" type = "module"></script>
+     <!-- Modal -->
+     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+           <div class="modal-content">
+              <div class="modal-header">
+                 <h3 class="modal-title" id="exampleModalLongTitle">Activity Details</h3>
+              </div>
+              <div class="modal-body">
+                <div id="activity2">
+                  <p> Mission: Work out at CCRB. </p>
+                  <button> Accept! </button>
+                  <button> Not yet. </button>
+                  <div id="map" ref="map"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+           </div>
+        </div>
+     </div>
 
+</body>
+<script src="activity.js"></script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkB6YMvOcViqQrvEgj5vziRyZvp3FG8Xg&libraries=geometry,places&callback=resultView.initMap">
+</script>   
 </html>
