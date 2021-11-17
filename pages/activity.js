@@ -98,12 +98,15 @@ window.resultView = new Vue({
       this.currentTask = this.clickedTask;
       // clear
       this.clickedTask = null;
-      // TODO START HERE
-      
       // Add new map for the functionality of user accepting the challenge
+      this.showActivity(this.currentTaskMap);
     },
 
     searchMap: function (index) {
+      // user selected a task; note MUST BE NOT NULL
+      if (this.currentTask !== null) {
+        return;
+      }
       // update placeID
       this.placeId = this.allTasks[index].location;
       // select task

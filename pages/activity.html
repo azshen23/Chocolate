@@ -44,8 +44,9 @@
     }
 
     .zoom:hover {
-        -webkit-transform: scale(1.5); /* Safari 3-8 */
-        transform: scale(1.5); 
+        -webkit-transform: scale(1.5);
+        /* Safari 3-8 */
+        transform: scale(1.5);
     }
 </style>
 
@@ -71,11 +72,17 @@
             </div>
         </nav>
         <div class="text-center">
-            <p v-show="(currentTask === null || task1 === currentTask)" v-on:click="searchMap(task1)" data-toggle="modal" data-target="#exampleModalLong">
+            <p v-show="(currentTask === null || task1 === currentTask)" v-on:click="searchMap(task1)"
+                v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
+                v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
                 {{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
-            <p v-show="(currentTask === null || task2 === currentTask)" v-on:click="searchMap(task2)" data-toggle="modal" data-target="#exampleModalLong">
+            <p v-show="(currentTask === null || task2 === currentTask)" v-on:click="searchMap(task2)"
+                v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
+                v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
                 {{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
-            <p v-show="(currentTask === null || task3 === currentTask)" v-on:click="searchMap(task3)" data-toggle="modal" data-target="#exampleModalLong">
+            <p v-show="(currentTask === null || task3 === currentTask)" v-on:click="searchMap(task3)"
+                v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
+                v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
                 {{allTasks[task3]['description'] || ''}} {{allTasks[task3]['points']}} points</p>
         </div>
         <!--Map to be displayed when user chooses a task-->
