@@ -53,8 +53,8 @@ window.resultView = new Vue({
     dstance: null,
     watchId: null,
     locationOn: false,
-    // map2 for when user selected a currentTask
-    map2: null,
+    // another map for when user selected a currentTask
+    currentTaskMap: null,
   },
   methods: {
     // setTasks: function () {
@@ -99,6 +99,7 @@ window.resultView = new Vue({
       // clear
       this.clickedTask = null;
       // TODO START HERE
+      
       // Add new map for the functionality of user accepting the challenge
     },
 
@@ -108,7 +109,7 @@ window.resultView = new Vue({
       // select task
       this.clickedTask = index;
       // shows the activity marker on map
-      this.showActivity();
+      this.showActivity(this.map);
       // moved showUser within showActivity, due to async
     },
 
@@ -124,23 +125,24 @@ window.resultView = new Vue({
       // create infowindow to display info about the location of activity
       this.infowindow = new google.maps.InfoWindow();
       this.errorInfowindow = new google.maps.InfoWindow({
-        position: this.map.getCenter(),
         content: "Error: The request to get user location timed out.",
-        //icon: this.userImage
       });
-      // get the location of activity
-      //this.showActivity();
-      //this.showUser();
+      // create another map obj for later, when user selects a task
+      this.currentTaskMap = new google.maps.Map(document.getElementById("map2"), {
+        center: ann_arbor,
+        zoom: 13,
+      });
     },
 
-    refocusMap: function() {
+    refocusMap: function(whichMap) {
+      console.log(whichMap);
       const bounds = new google.maps.LatLngBounds();
       bounds.extend(this.activityMarker.position);
       bounds.extend(this.userMarker.position);
-      this.map.fitBounds(bounds);
+      whichMap.fitBounds(bounds);
     },
 
-    showUser: function () {
+    showUser: function (whichMap) {
       // user image
       // this.userImage = {
       //   url: "a-better-tomorrow.jpg", // url TODO: CHANGE THIS
@@ -159,9 +161,9 @@ window.resultView = new Vue({
             this.locationOn = true;
             const pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             // automatically updates user's location
-            this.updateUserMarker(pos, this.destination);
+            this.updateUserMarker(pos, this.destination, whichMap);
           },
-          this.showError, // on error
+          () => this.showError(whichMap), // on error
           { // additional settings
             enableHighAccuracy: true,
             timeout: 8000, // wait a max of 8 seconds for user's location
@@ -175,20 +177,20 @@ window.resultView = new Vue({
       }
     },
 
-    updateUserMarker: function (user_pos, dest_pos) {
+    updateUserMarker: function (user_pos, dest_pos, whichMap) {
       console.log("update position");
       // if first time setting user position not set
       if (!this.userMarker) {
         // initialize marker for user
         this.userMarker = new google.maps.Marker({
-          map: this.map,
+          map: whichMap,
           position: user_pos,
           title: "You",
           //icon: this.userImage TODO
         });
         // refocus map, but only for first time getting user position
         // use setTimeout to guarantee Bootstrap to change the visibility of map first
-        setTimeout(this.refocusMap, 500);
+        setTimeout(() => this.refocusMap(whichMap), 500);
       }
       else {
         // update user's position on map
@@ -198,21 +200,21 @@ window.resultView = new Vue({
       this.distance = google.maps.geometry.spherical.computeDistanceBetween(user_pos, dest_pos) / 1609;
     },
 
-    showActivity: function () {
+    showActivity: function (whichMap) {
       // create request to info about location of activity
       const request = {
         //placeId: 'ChIJ06khDUOuPIgRpSjRFPKPV-Y', // CCRB TODO: CHANGE THIS
         placeId: this.placeId,
       };
       // get location of activity
-      this.service = new google.maps.places.PlacesService(this.map);
+      this.service = new google.maps.places.PlacesService(whichMap);
       this.service.getDetails(request, (result, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && result) {
           console.log(result);
-          this.createActivityMarker(result);
+          this.createActivityMarker(result, whichMap);
           this.destination = result.geometry.location;
           // after activity is fetched, now show user on map
-          this.showUser();
+          this.showUser(whichMap);
         }
         else {
           alert("Failed to fetch activity location, please reload page to try again.");
@@ -220,18 +222,18 @@ window.resultView = new Vue({
       });
     },
 
-    createActivityMarker: function (place) {
+    createActivityMarker: function (place, whichMap) {
       if (!place.geometry || !place.geometry.location) return;
       // create activity marker
       this.activityMarker = new google.maps.Marker({
-        map: this.map,
+        map: whichMap,
         position: place.geometry.location,
         animation: google.maps.Animation.DROP,
         title: "Activity",
       });
       // recompute distance between user and activity
       // refocus map
-      this.map.setCenter(place.geometry.location);
+      whichMap.setCenter(place.geometry.location);
       // add a listener for this activity
       google.maps.event.addListener(this.activityMarker, "click", () => {
         this.infowindow.setContent(
@@ -257,7 +259,7 @@ window.resultView = new Vue({
         );
         this.infowindow.open({
           anchor: this.activityMarker,
-          map: this.map,
+          map: whichMap,
           shouldFocus: false,
         });
       });
@@ -268,19 +270,23 @@ window.resultView = new Vue({
       // this.locationOn = false;
       // close info windows
       this.infowindow.close();
-      // clear listener
-      google.maps.event.clearInstanceListeners(this.activityMarker);
-      // clear activity marker
-      this.activityMarker.setMap(null);
-      this.activityMarker = null;
+      if (this.activityMarker) {
+        // clear listener
+        google.maps.event.clearInstanceListeners(this.activityMarker);
+        // clear activity marker
+        this.activityMarker.setMap(null);
+        this.activityMarker = null;
+      }
       // stop tracking user
       navigator.geolocation.clearWatch(this.watchId);
-      // clear user marker
-      this.userMarker.setMap(null);
-      this.userMarker = null;
+      if (this.userMarker) {
+        // clear user marker
+        this.userMarker.setMap(null);
+        this.userMarker = null;
+      }
     },
 
-    showError: function (error) {
+    showError: function (error, whichMap) {
       switch(error.code) {
         case error.PERMISSION_DENIED:
           this.locationOn = false;
@@ -294,7 +300,10 @@ window.resultView = new Vue({
           if (this.userMarker) {
             this.errorInfowindow.setPosition(this.userMarker.getPosition());
           }
-          this.errorInfowindow.open(this.map);
+          else {
+            this.errorInfowindow.setPosition(whichMap.getCenter());
+          }
+          this.errorInfowindow.open(whichMap);
           break;
         case error.UNKNOWN_ERROR:
           console.log("Error: An unknown error occurred.");
