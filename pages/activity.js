@@ -28,7 +28,7 @@
   }
 }); */
 
-var resultView = new Vue({
+window.resultView = new Vue({
   el: '#activity',
   data: {
     allTasks: [
@@ -39,10 +39,12 @@ var resultView = new Vue({
     task1: 0,
     task2: 1,
     task3: 2,
-    selectedTask: -1,
+    clickedTask: null, // what the user clicks on
+    currentTask: null, // what the user is actually doing right now
     //map start
     map: null,
-    infowindow: null,
+    infowindow: null, // to display activity location
+    errorInfowindow: null, // to display error
     service: null,
     userImage: null,
     userMarker: null,
@@ -50,6 +52,9 @@ var resultView = new Vue({
     placeId: null, // IM Building
     dstance: null,
     watchId: null,
+    locationOn: false,
+    // map2 for when user selected a currentTask
+    map2: null,
   },
   methods: {
     // setTasks: function () {
@@ -87,9 +92,21 @@ var resultView = new Vue({
     //     }
     //   }
     // },
+    acceptChallenge: function () {
+      this.closeWindow()
+      // set current task
+      this.currentTask = this.clickedTask;
+      // clear
+      this.clickedTask = null;
+      // TODO START HERE
+      // Add new map for the functionality of user accepting the challenge
+    },
+
     searchMap: function (index) {
       // update placeID
-      this.placeId = this.allTasks[index]['location'];
+      this.placeId = this.allTasks[index].location;
+      // select task
+      this.clickedTask = index;
       // shows the activity marker on map
       this.showActivity();
       // shows the user marker on map
@@ -100,12 +117,17 @@ var resultView = new Vue({
     initMap: function () {
       // center the map at Ann Arbor
       const ann_arbor = new google.maps.LatLng(42.2808, -83.7430);
-      // create infowindow to display info about the location of activity
-      this.infowindow = new google.maps.InfoWindow();
       // create map obj
       this.map = new google.maps.Map(document.getElementById("map"), {
         center: ann_arbor,
         zoom: 13,
+      });
+      // create infowindow to display info about the location of activity
+      this.infowindow = new google.maps.InfoWindow();
+      this.errorInfowindow = new google.maps.InfoWindow({
+        position: this.map.getCenter(),
+        content: "Error: The request to get user location timed out.",
+        //icon: this.userImage
       });
       // get the location of activity
       //this.showActivity();
@@ -123,16 +145,20 @@ var resultView = new Vue({
       // track user position
       // check if geolocation is supported
       if (navigator.geolocation) {
-        // automatically updates user's location
         this.watchId = navigator.geolocation.watchPosition(
           (position) => { // on success
+            // close error window
+            this.errorInfowindow.close();
+            // user turned on location
+            this.locationOn = true;
             const pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            // automatically updates user's location
             this.updateUserMarker(pos, this.destination);
           },
           this.showError, // on error
           { // additional settings
             enableHighAccuracy: true,
-            timeout: 5000,
+            timeout: 8000, // wait a max of 8 seconds for user's location
             maximumAge: 0
           }
         );
@@ -152,7 +178,7 @@ var resultView = new Vue({
           map: this.map,
           position: user_pos,
           title: "You",
-          //icon: this.userImage
+          //icon: this.userImage TODO
         });
         // refocus map, but only for first time
         const bounds = new google.maps.LatLngBounds();
@@ -229,6 +255,8 @@ var resultView = new Vue({
     },
 
     closeWindow: function () {
+      // clear location
+      this.locationOn = false;
       // close info windows
       this.infowindow.close();
       // clear listener
@@ -246,22 +274,26 @@ var resultView = new Vue({
     showError: function (error) {
       switch(error.code) {
         case error.PERMISSION_DENIED:
-          alert("You denied the request for Geolocation.\n"
+          this.locationOn = false;
+          alert("Error: You denied the request for Geolocation.\n"
           + "For full functionality, please turn on location.");
           break;
         case error.POSITION_UNAVAILABLE:
-          alert("Location information is unavailable.");
+          console.log("Error: Location information is unavailable.");
           break;
         case error.TIMEOUT:
-          alert("The request to get user location timed out.");
+          if (this.userMarker) {
+            this.errorInfowindow.setPosition(this.userMarker.getPosition());
+          }
+          this.errorInfowindow.open(this.map);
           break;
         case error.UNKNOWN_ERROR:
-          alert("An unknown error occurred.");
+          console.log("Error: An unknown error occurred.");
           break;
       }
-      // this.showUser();
     },
   }
 })
 
 //resultView.setTasks();
+

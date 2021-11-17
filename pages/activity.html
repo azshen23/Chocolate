@@ -64,11 +64,11 @@
             </div>
         </nav>
         <div class="text-center">
-            <p v-on:click="searchMap(task1)" data-toggle="modal" data-target="#exampleModalLong">
+            <p v-show="(currentTask === null || task1 === currentTask)" v-on:click="searchMap(task1)" data-toggle="modal" data-target="#exampleModalLong">
                 {{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
-            <p v-on:click="searchMap(task2)" data-toggle="modal" data-target="#exampleModalLong">
+            <p v-show="(currentTask === null || task2 === currentTask)" v-on:click="searchMap(task2)" data-toggle="modal" data-target="#exampleModalLong">
                 {{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
-            <p v-on:click="searchMap(task3)" data-toggle="modal" data-target="#exampleModalLong">
+            <p v-show="(currentTask === null || task3 === currentTask)" v-on:click="searchMap(task3)" data-toggle="modal" data-target="#exampleModalLong">
                 {{allTasks[task3]['description'] || ''}} {{allTasks[task3]['points']}} points</p>
         </div>
         <!-- Modal -->
@@ -82,18 +82,24 @@
                     <div class="modal-body">
                         <div id="popup">
                             <p> Mission: Work out at CCRB. </p>
-                            <button class="btn btn-success"> Accept! </button>
-                            <button class="btn btn-secondary" data-dismiss="modal"
+                            <button v-show="locationOn" type="button" class="btn btn-success" data-dismiss="modal"
+                                v-on:click="acceptChallenge"> Accept! </button>
+                            <button v-show="locationOn" type="button" class="btn btn-secondary" data-dismiss="modal"
                                 v-on:click="closeWindow"> Not yet. </button>
                             <div id="map" ref="map"></div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button v-show="!locationOn" type="button" class="btn btn-secondary" data-dismiss="modal"
+                            v-on:click="closeWindow"> Close </button>
+                    </div>
                 </div>
             </div>
         </div>
+        <!--Map to be displayed when user chooses a task-->
     </div>
 </body>
-<script src="activity.js"></script>
+<script src="activity.js" type="module"></script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkB6YMvOcViqQrvEgj5vziRyZvp3FG8Xg&libraries=geometry,places&callback=resultView.initMap">
     </script>
