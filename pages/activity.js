@@ -195,13 +195,8 @@ var resultView = new Vue({
         title: "Activity",
       });
       // recompute distance between user and activity
-      // this.distance = google.maps.geometry.spherical.computeDistanceBetween(this.userMarker.position, place.geometry.location) / 1609;
       // refocus map
-      if (place.geometry.viewport) {
-        this.map.fitBounds(place.geometry.viewport);
-      } else {
-        this.map.setCenter(place.geometry.location);
-      }
+      this.map.setCenter(place.geometry.location);
       // add a listener for this activity
       google.maps.event.addListener(this.activityMarker, "click", () => {
         this.infowindow.setContent(
@@ -212,7 +207,7 @@ var resultView = new Vue({
             ${place.formatted_address}
           </div>
           <div>
-            ${this.distance.toFixed(2) + " mi away" || ''}
+            ${this.distance ? this.distance.toFixed(2) + " mi away" : ''}
           </div>
           <div>
             <a href=${place.website} target="_blank"> Website </a>
@@ -251,7 +246,8 @@ var resultView = new Vue({
     showError: function (error) {
       switch(error.code) {
         case error.PERMISSION_DENIED:
-          alert("User denied the request for Geolocation.");
+          alert("You denied the request for Geolocation.\n"
+          + "For full functionality, please turn on location.");
           break;
         case error.POSITION_UNAVAILABLE:
           alert("Location information is unavailable.");

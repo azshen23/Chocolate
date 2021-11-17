@@ -82,14 +82,11 @@
                     <div class="modal-body">
                         <div id="popup">
                             <p> Mission: Work out at CCRB. </p>
-                            <button> Accept! </button>
-                            <button> Not yet. </button>
+                            <button class="btn btn-success"> Accept! </button>
+                            <button class="btn btn-secondary" data-dismiss="modal"
+                                v-on:click="closeWindow"> Not yet. </button>
                             <div id="map" ref="map"></div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            v-on:click="closeWindow">Close</button>
                     </div>
                 </div>
             </div>
