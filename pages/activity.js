@@ -109,8 +109,7 @@ window.resultView = new Vue({
       this.clickedTask = index;
       // shows the activity marker on map
       this.showActivity();
-      // shows the user marker on map
-      this.showUser();
+      // moved showUser within showActivity, due to async
     },
 
     // MAP METHODS BELOW
@@ -132,6 +131,13 @@ window.resultView = new Vue({
       // get the location of activity
       //this.showActivity();
       //this.showUser();
+    },
+
+    refocusMap: function() {
+      const bounds = new google.maps.LatLngBounds();
+      bounds.extend(this.activityMarker.position);
+      bounds.extend(this.userMarker.position);
+      this.map.fitBounds(bounds);
     },
 
     showUser: function () {
@@ -180,17 +186,15 @@ window.resultView = new Vue({
           title: "You",
           //icon: this.userImage TODO
         });
-        // refocus map, but only for first time
-        const bounds = new google.maps.LatLngBounds();
-        bounds.extend(this.activityMarker.position);
-        bounds.extend(this.userMarker.position);
-        this.map.fitBounds(bounds);
+        // refocus map, but only for first time getting user position
+        // use setTimeout to guarantee Bootstrap to change the visibility of map first
+        setTimeout(this.refocusMap, 500);
       }
       else {
         // update user's position on map
         this.userMarker.setPosition(user_pos);
       }
-      // returns distance between user and destination in MILES
+      // set distance between user and destination in MILES
       this.distance = google.maps.geometry.spherical.computeDistanceBetween(user_pos, dest_pos) / 1609;
     },
 
@@ -207,6 +211,11 @@ window.resultView = new Vue({
           console.log(result);
           this.createActivityMarker(result);
           this.destination = result.geometry.location;
+          // after activity is fetched, now show user on map
+          this.showUser();
+        }
+        else {
+          alert("Failed to fetch activity location, please reload page to try again.");
         }
       });
     },
@@ -256,7 +265,7 @@ window.resultView = new Vue({
 
     closeWindow: function () {
       // clear location
-      this.locationOn = false;
+      // this.locationOn = false;
       // close info windows
       this.infowindow.close();
       // clear listener
