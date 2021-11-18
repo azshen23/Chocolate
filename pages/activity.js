@@ -28,6 +28,8 @@
   }
 }); */
 
+var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
+
 window.resultView = new Vue({
   el: '#activity',
   data: {
@@ -41,6 +43,7 @@ window.resultView = new Vue({
     task3: 2,
     clickedTask: null, // what the user clicks on
     currentTask: null, // what the user is actually doing right now
+    taskCompleted: [false, false, false], // indicates whether task is completed
     //map start
     map: null,
     infowindow: null, // to display activity location
@@ -50,7 +53,7 @@ window.resultView = new Vue({
     userMarker: null,
     activityMarker: null,
     placeId: null, // IM Building
-    dstance: null,
+    distance: null,
     watchId: null,
     locationOn: false,
     // another map for when user selected a currentTask
@@ -199,8 +202,33 @@ window.resultView = new Vue({
         // update user's position on map
         this.userMarker.setPosition(user_pos);
       }
-      // set distance between user and destination in MILES
-      this.distance = google.maps.geometry.spherical.computeDistanceBetween(user_pos, dest_pos) / 1609;
+      // get distance between user and destination in meters
+      const dist = google.maps.geometry.spherical.computeDistanceBetween(user_pos, dest_pos);
+      // task is consider completed if the distance between them is < 50 M
+      if (dist <= 50) {
+        this.completeActivity();
+      }
+      // store distance in MILES
+      this.distance = dist / 1609;
+    },
+
+    completeActivity: function() {
+      // play music
+      mission_passed_sound.play();
+      // display modal
+      document.getElementById("mis-com-button").click();
+      // reset internal data
+      this.closeWindow();
+      if (this.currentTask === this.task1) {
+        this.taskCompleted[0] = true;
+      }
+      else if (this.currentTask === this.task2) {
+        this.taskCompleted[1] = true;
+      }
+      else {
+        this.taskCompleted[2] = true;
+      }
+      this.currentTask = null;
     },
 
     showActivity: function (whichMap) {
