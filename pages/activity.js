@@ -1,22 +1,22 @@
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
-// import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
-// import { getAuth} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
-// import "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
+import { getAuth} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+import "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 
-// const firebaseConfig = {
-// apiKey: "AIzaSyBcDXz7O-3FkG2uCgTGWXY7Ay4aMyXE3N8",
-// authDomain: "chocolate-2c71d.firebaseapp.com",
-// projectId: "chocolate-2c71d",
-// storageBucket: "chocolate-2c71d.appspot.com",
-// messagingSenderId: "744292159993",
-// appId: "1:744292159993:web:866b078a19b17b2d21ad28",
-// measurementId: "G-3ZNXNEQ38Z"
-// };
+const firebaseConfig = {
+apiKey: "AIzaSyBcDXz7O-3FkG2uCgTGWXY7Ay4aMyXE3N8",
+authDomain: "chocolate-2c71d.firebaseapp.com",
+projectId: "chocolate-2c71d",
+storageBucket: "chocolate-2c71d.appspot.com",
+messagingSenderId: "744292159993",
+appId: "1:744292159993:web:866b078a19b17b2d21ad28",
+measurementId: "G-3ZNXNEQ38Z"
+};
 
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
-// const auth = getAuth();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth();
 
 //if user is currently not logged in a session, they will be redirected to the log in page
 //comment out for now since this well intefere with development of the page
@@ -28,7 +28,78 @@
   }
 }); */
 
+// GTA San Andreas Mission Passed Theme
+// https://www.youtube.com/watch?v=7lsdJDiJ0QE
 var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
+
+
+// Motivational Speech for the user
+// Credit: https://undertale.fandom.com/wiki/SAVE_Point
+var motivation_quotes = [
+  "Knowing the mouse might one day leave its hole and get the cheese... It fills you with determination.",
+  "The cold atmosphere of a new land... it fills you with determination.",
+  "Knowing the mouse might one day find a way to heat up the spaghetti... It fills you with determination.",
+  "Snow can always be broken down and rebuilt into something more useful. This simple fact fills you with determination.",
+  "Knowing that dog will never give up trying to make the perfect snowdog... It fills you with determination.",
+  "The sight of such a friendly town fills you with determination.",
+  "A feeling of dread hangs over you... But you stay determined.",
+  "Knowing the mouse might one day extract the cheese from the mystical crystal... It fills you with determination.",
+  "The serene sound of a distant music box... It fills you with determination.",
+  "Partaking in useless garbage fills you with determination.",
+  "You feel a calming tranquility. You're filled with determination...",
+  "You feel... something. You're filled with determination.",
+  "The wind is howling. You're filled with determination...",
+  "The howling wind is now a breeze. This gives you determination...",
+  "Seeing such a strange laboratory in a place like this... You're filled with determination.",
+  "An ominous structure looms in the distance... You're filled with determination.",
+  "Knowing the mouse might one day hack into the computerized safe and get the cheese... It fills you with determination.",
+  "The relaxing atmosphere of Ann Arbor... it fills you with determination.",
+  "The air is filled with the smell of carbon dioxide... it fills you with determination.",
+  "Behind this door must be the path to Bursley Baits. You're filled with determination."
+];
+
+// display the motivational text, one character at a time
+document.addEventListener('DOMContentLoaded', function (event) {
+  // type one text in the typwriter
+  // keeps calling itself until the text is finished
+  function typeWriter(text, i, fnCallback) {
+    // chekc if text isn't finished yet
+    if (i < (text.length)) {
+      // add next character to strong
+      document.querySelector("strong").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+
+      // wait for a while and call this function again for next character
+      setTimeout(function () {
+        typeWriter(text, i + 1, fnCallback)
+      }, 100);
+    }
+    // text finished, call callback if there is a callback function
+    else if (typeof fnCallback == 'function') {
+      // call callback after timeout
+      setTimeout(fnCallback, 10000);
+    }
+  }
+  // start a typewriter animation for a text in the dataText array
+  function StartTextAnimation(i) {
+    if (typeof motivation_quotes[i] == 'undefined') {
+      setTimeout(function () {
+        StartTextAnimation(0);
+      }, 10000);
+    }
+    // check if dataText[i] exists
+    if (i < motivation_quotes[i].length) {
+      // text exists! start typewriter animation
+      typeWriter(motivation_quotes[i], 0, function () {
+        // after callback (and whole text has been animated), start next text
+        StartTextAnimation(i + 1);
+      });
+    }
+  }
+  // shuffle the texts
+  motivation_quotes.shu
+  // start the text animation
+  StartTextAnimation(0);
+});
 
 window.resultView = new Vue({
   el: '#activity',
@@ -279,7 +350,6 @@ window.resultView = new Vue({
     showActivity: function (whichMap) {
       // create request to info about location of activity
       const request = {
-        //placeId: 'ChIJ06khDUOuPIgRpSjRFPKPV-Y', // CCRB TODO: CHANGE THIS
         placeId: this.placeId,
       };
       // get location of activity

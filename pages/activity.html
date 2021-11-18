@@ -77,30 +77,32 @@
             </div>
         </nav>
         <div class="text-center">
+            <strong></strong>
+            <h1> {{ currentTask === null ? "Today's Mission" : "Current Mission" }} </h1>
             <p v-show="(!taskCompleted[0] && (currentTask === null || task1 === currentTask))" v-on:click="searchMap(task1)"
                 v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
                 v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
-                {{allTasks[task1]['description']}} {{allTasks[task1]['points']}} points</p>
+                {{allTasks[task1]['description']}} - {{allTasks[task1]['points']}} Respect Points</p>
             <p v-show="taskCompleted[0] && (currentTask === null)">
                 {{allTasks[task1]['description']}} - COMPLETED!
             </p>
             <p v-show="(!taskCompleted[1] && (currentTask === null || task2 === currentTask))" v-on:click="searchMap(task2)"
                 v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
                 v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
-                {{allTasks[task2]['description']}} {{allTasks[task2]['points']}} points</p>
+                {{allTasks[task2]['description']}} - {{allTasks[task2]['points']}} Respect Points</p>
             <p v-show="taskCompleted[1] && (currentTask === null)">
                 {{allTasks[task2]['description']}} - COMPLETED!
             </p>
             <p v-show="(!taskCompleted[2] && (currentTask === null || task3 === currentTask))" v-on:click="searchMap(task3)"
                 v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
                 v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
-                {{allTasks[task3]['description'] || ''}} {{allTasks[task3]['points']}} points</p>
+                {{allTasks[task3]['description'] || ''}} - {{allTasks[task3]['points']}} Respect Points</p>
             <p v-show="taskCompleted[2] && (currentTask === null)">
                 {{allTasks[task3]['description']}} - COMPLETED!
             </p>
         </div>
         <!--Map to be displayed when user chooses a task-->
-        <div id="map2"></div>
+        <div v-show="currentTask !== null" id="map2"></div>
         <!-- Activity Map Modal -->
         <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
@@ -135,10 +137,9 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                <h1 class="modal-title text-center" id="exampleModalLabel">
+                <h2 class="modal-title text-center" id="exampleModalLabel">
                     <img class="mis-com" src="../images/mission_complete.png"/>
-                    <!-- <p>You earned {{currentTask ? allTasks[currentTask].points : ''}} EXP!</p> -->
-                </h1>
+                </h2>
                 </div>
             </div>
             </div>
