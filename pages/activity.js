@@ -34,9 +34,65 @@ window.resultView = new Vue({
   el: '#activity',
   data: {
     allTasks: [
-      { description: "Do Leg Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 20 },
-      { description: "Do Chest Workout at CCRB", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 20 },
-      { description: "Go Jogging at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 20 }
+      { description: "Do Leg Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
+      { description: "Do Chest Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
+      { description: "Do Back Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
+      { description: "Run on the field near IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
+      { description: "Play Basketball at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
+      //
+      { description: "Play Tennis at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
+      { description: "Play Soccer at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
+      { description: "Play Basketball at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
+      { description: "Run Along Track at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
+      { description: "Play Ultimate Frisbee at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
+      //
+      { description: "Go Jogging at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 99 },
+      { description: "Go Jogging at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 99 },
+      { description: "Go Hiking at Bird Hills Nature Area", location: "ChIJpx8iS_6tPIgRSNEzjRsGJPI", points: 99 },
+      { description: "Go Jogging at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 99 },
+      { description: "Go Jogging at West Park", location: "ChIJmUmUpRiuPIgR1H8_Tc3aOgo", points: 99 },
+      //
+      { description: "Do Leg Workout at IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
+      { description: "Do Chest Workout at IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
+      { description: "Do Back Workout at IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
+      { description: "Run on the field near IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
+      { description: "Play Basketball at IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
+      //
+      { description: "Go Jogging at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 99 },
+      { description: "Go Hiking at Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 99 },
+      { description: "Go Jogging at County Farm Park", location: "ChIJWev0zBivPIgR2yVMyaMoaTI", points: 99 },
+      { description: "Observe Nature at Nichols Arboretum", location: "ChIJAZAd-l2uPIgRiGn9BwszutQ", points: 99 },
+      { description: "Go Take a Walk at The Diag", location: "ChIJQyjaRiqvPIgRLFzfxITsj7Q", points: 99 },
+      //
+      { description: "Have an outdoor picnic at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 99 },
+      { description: "Explore nature at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 99 },
+      { description: "Outdoor meditation at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 99 },
+      { description: "Go Vist Michigan Stadium", location: "ChIJTd-grjOuPIgRrdNQzLYIANc", points: 99 },
+      { description: "Go Vist the Museum of Natural History", location: "ChIJhy11v0OuPIgR33uMs6yLATo", points: 99 },
+      //
+      { description: "Go Vist the Museum of Art", location: "ChIJbbmqg0euPIgRzlnhZSj2z8g", points: 99 },
+      { description: "Go Visit the Museum of Natural History", location: "ChIJhy11v0OuPIgR33uMs6yLATo", points: 99 },
+      { description: "Play Golf at UofM Golf Course", location: "ChIJvfjVlMuvPIgR43RxgKMGHVU", points: 99 },
+      { description: "Visit Matthaei Botanical Gardens", location: "ChIJR3mTeOSrPIgRF0CehvEp8Jg", points: 99 },
+      { description: "Rock Climb at Planet Rock", location: "ChIJtXJtoQuxPIgRuF7yf1dAMsA", points: 99 },
+      //
+      { description: "Play Softball at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
+      { description: "Play Football at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
+      { description: "Play Scorrer at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
+      { description: "Outdoor Yoga at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
+      { description: "Jog Along Trails at Matthaei Botanical Gardens", location: "ChIJR3mTeOSrPIgRF0CehvEp8Jg", points: 99 },
+      //
+      { description: "Observe Nature at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 99 },
+      { description: "Clean Up Trash at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 99 },
+      { description: "Jog Along Trails at Lillie Park", location: "ChIJT7PJY2CvPIgRv3n7r5fSqi0", points: 99 },
+      { description: "Outdoor Yoga at Lillie Park", location: "ChIJT7PJY2CvPIgRv3n7r5fSqi0", points: 99 },
+      { description: "Golf at Stonebridge Golf Club", location: "ChIJkTJkerO6PIgRwUnVaV_Hbcc", points: 99 },
+      //
+      { description: "Bike the Trails of Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 99 },
+      { description: "Walk Through Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 99 },
+      { description: "Walk to Farmers Market", location: "ChIJ-a_wdBauPIgRwd8hiA1d29k", points: 99 },
+      { description: "Drop in Hockey at the Ice Cube", location: "ChIJxQUa3zmwPIgRJhizKNGdmOU", points: 99 },
+      { description: "Go Ice-Skating at the Ice Cube", location: "ChIJxQUa3zmwPIgRJhizKNGdmOU", points: 99 },
     ],
     task1: 0,
     task2: 1,
@@ -60,41 +116,30 @@ window.resultView = new Vue({
     currentTaskMap: null,
   },
   methods: {
-    // setTasks: function () {
-    //   for (let i = 1; i < 50; i++) {
-    //     this.allTasks.push(
-    //       {
-    //         description: "Go to CCRB" + i,
-    //         location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ",
-    //         points: i
-    //       }
-    //     )
-    //   }
-    // },
-    // getTasks: function () {
-    //   let counter = 0;
-    //   while (counter < 3) {
-    //     let num = Math.floor(Math.random() * 51);
-    //     if (counter == 0) {
-    //       this.task1 = num;
-    //       counter++;
-    //     } else if (counter == 1) {
-    //       if (this.task1 == num) {
-    //         console.log("")
-    //       } else {
-    //         this.task2 = num;
-    //         counter++;
-    //       }
-    //     } else if (counter == 2) {
-    //       if (this.task1 == num || this.task2 == num) {
-    //         console.log("");
-    //       } else {
-    //         this.task3 = num;
-    //         counter++
-    //       }
-    //     }
-    //   }
-    // },
+    getTasks: function () {
+      let counter = 0;
+      while (counter < 3) {
+        let num = Math.floor(Math.random() * 51);
+        if (counter == 0) {
+          this.task1 = num;
+          counter++;
+        } else if (counter == 1) {
+          if (this.task1 == num) {
+            console.log("")
+          } else {
+            this.task2 = num;
+            counter++;
+          }
+        } else if (counter == 2) {
+          if (this.task1 == num || this.task2 == num) {
+            console.log("");
+          } else {
+            this.task3 = num;
+            counter++
+          }
+        }
+      }
+    },
     acceptChallenge: function () {
       this.closeWindow()
       // set current task
@@ -140,7 +185,7 @@ window.resultView = new Vue({
       });
     },
 
-    refocusMap: function(whichMap) {
+    refocusMap: function (whichMap) {
       console.log(whichMap);
       const bounds = new google.maps.LatLngBounds();
       bounds.extend(this.activityMarker.position);
@@ -205,14 +250,14 @@ window.resultView = new Vue({
       // get distance between user and destination in meters
       const dist = google.maps.geometry.spherical.computeDistanceBetween(user_pos, dest_pos);
       // task is consider completed if the distance between them is < 50 M
-      if (dist <= 50) {
+      if (this.currentTask !== null && dist <= 50) {
         this.completeActivity();
       }
       // store distance in MILES
       this.distance = dist / 1609;
     },
 
-    completeActivity: function() {
+    completeActivity: function () {
       // play music
       mission_passed_sound.play();
       // display modal
@@ -284,7 +329,7 @@ window.resultView = new Vue({
             <a href=${place.url} target="_blank"> Get Directions </a>
           </div>
           <div>
-            <img src=${place.photos[0].getUrl({maxWidth: 250, maxHeight: 250})} alt="image" />
+            <img src=${place.photos[0].getUrl({ maxWidth: 250, maxHeight: 250 })} alt="image" />
           </div>
           `
         );
@@ -318,11 +363,11 @@ window.resultView = new Vue({
     },
 
     showError: function (error, whichMap) {
-      switch(error.code) {
+      switch (error.code) {
         case error.PERMISSION_DENIED:
           this.locationOn = false;
           alert("Error: You denied the request for Geolocation.\n"
-          + "For full functionality, please turn on location.");
+            + "For full functionality, please turn on location.");
           break;
         case error.POSITION_UNAVAILABLE:
           console.log("Error: Location information is unavailable.");
@@ -341,8 +386,9 @@ window.resultView = new Vue({
           break;
       }
     },
+  },
+  mounted() {
+    this.getTasks();
   }
 })
-
-//resultView.setTasks();
 
