@@ -128,13 +128,13 @@ window.resultView = new Vue({
       { description: "Run on the field near IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
       { description: "Play Basketball at IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
       //
-      { description: "Go Jogging at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 99 },
+      { description: "Go Picnicking at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 99 },
       { description: "Go Hiking at Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 99 },
       { description: "Go Jogging at County Farm Park", location: "ChIJWev0zBivPIgR2yVMyaMoaTI", points: 99 },
       { description: "Observe Nature at Nichols Arboretum", location: "ChIJAZAd-l2uPIgRiGn9BwszutQ", points: 99 },
       { description: "Go Take a Walk at The Diag", location: "ChIJQyjaRiqvPIgRLFzfxITsj7Q", points: 99 },
       //
-      { description: "Have an outdoor picnic at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 99 },
+      { description: "Have an Outdoor Picnic at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 99 },
       { description: "Explore nature at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 99 },
       { description: "Outdoor meditation at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 99 },
       { description: "Go Vist Michigan Stadium", location: "ChIJTd-grjOuPIgRrdNQzLYIANc", points: 99 },
@@ -189,7 +189,7 @@ window.resultView = new Vue({
     getTasks: function () {
       let counter = 0;
       while (counter < 3) {
-        let num = Math.floor(Math.random() * 51);
+        let num = Math.floor(Math.random() * 50);
         if (counter == 0) {
           this.task1 = num;
           counter++;
@@ -292,9 +292,9 @@ window.resultView = new Vue({
           },
           () => this.showError(whichMap), // on error
           { // additional settings
-            enableHighAccuracy: true,
+            enableHighAccuracy: false, // no need for high accuracy, for now...
             timeout: 8000, // wait a max of 8 seconds for user's location
-            maximumAge: 0
+            maximumAge: 8000 // allow 8 seconds of cached user's location
           }
         );
       }
@@ -305,7 +305,7 @@ window.resultView = new Vue({
     },
 
     updateUserMarker: function (user_pos, dest_pos, whichMap) {
-      console.log("update position");
+      console.log("update position ", this.watchId);
       // if first time setting user position not set
       if (!this.userMarker) {
         // initialize marker for user
@@ -440,8 +440,9 @@ window.resultView = new Vue({
     showError: function (error, whichMap) {
       switch (error.code) {
         case error.PERMISSION_DENIED:
+          console.log(this.watchId);
           this.locationOn = false;
-          alert("Error: You denied the request for Geolocation.\n"
+          alert("Error: The permission for location is denied.\n"
             + "For full functionality, please turn on location.");
           break;
         case error.POSITION_UNAVAILABLE:
