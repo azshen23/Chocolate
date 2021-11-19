@@ -53,6 +53,17 @@
         height: 100%;
         width: 100%;
     }
+
+    .flx {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .flx div {
+        margin: 7px;
+    }
 </style>
 
 <body>
@@ -76,30 +87,39 @@
                 </a>
             </div>
         </nav>
-        <div class="text-center">
+        <div class="flx">
             <strong></strong>
-            <h1> {{ currentTask === null ? "Today's Mission" : "Current Mission" }} </h1>
-            <p v-show="(!taskCompleted[0] && (currentTask === null || task1 === currentTask))" v-on:click="searchMap(task1)"
-                v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
+            <h1> {{ currentTask === null ? " Today's Mission" : "Current Mission" }} </h1>
+            <div v-bind:class="(currentTask === null ? 'btn btn-outline-dark' : '')"
+                v-show="(!taskCompleted[0] && (currentTask === null || task1 === currentTask))"
+                v-on:click="searchMap(task1)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
                 v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
-                {{allTasks[task1]['description']}} - {{allTasks[task1]['points']}} Respect Points</p>
-            <p v-show="taskCompleted[0] && (currentTask === null)">
+                {{allTasks[task1]['description']}} - {{allTasks[task1]['points']}} Respect Points</div>
+            <div v-show="taskCompleted[0] && (currentTask === null)">
                 {{allTasks[task1]['description']}} - COMPLETED!
-            </p>
-            <p v-show="(!taskCompleted[1] && (currentTask === null || task2 === currentTask))" v-on:click="searchMap(task2)"
-                v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
+            </div>
+            <div v-bind:class="(currentTask === null ? 'btn btn-outline-dark' : '')"
+                v-show="(!taskCompleted[1] && (currentTask === null || task2 === currentTask))"
+                v-on:click="searchMap(task2)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
                 v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
-                {{allTasks[task2]['description']}} - {{allTasks[task2]['points']}} Respect Points</p>
-            <p v-show="taskCompleted[1] && (currentTask === null)">
+                {{allTasks[task2]['description']}} - {{allTasks[task2]['points']}} Respect Points</div>
+            <div v-show="taskCompleted[1] && (currentTask === null)">
                 {{allTasks[task2]['description']}} - COMPLETED!
-            </p>
-            <p v-show="(!taskCompleted[2] && (currentTask === null || task3 === currentTask))" v-on:click="searchMap(task3)"
-                v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
+            </div>
+            <div v-bind:class="(currentTask === null ? 'btn btn-outline-dark' : '')"
+                v-show="(!taskCompleted[2] && (currentTask === null || task3 === currentTask))"
+                v-on:click="searchMap(task3)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
                 v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
-                {{allTasks[task3]['description'] || ''}} - {{allTasks[task3]['points']}} Respect Points</p>
-            <p v-show="taskCompleted[2] && (currentTask === null)">
+                {{allTasks[task3]['description'] || ''}} - {{allTasks[task3]['points']}} Respect Points</div>
+            <div v-show="taskCompleted[2] && (currentTask === null)">
                 {{allTasks[task3]['description']}} - COMPLETED!
-            </p>
+            </div>
+            <div v-bind:class="(currentTask !== null ? 'btn btn-outline-dark' : '')" v-show="currentTask !== null"
+                v-on:click="cancelTask">
+                Cancel
+            </div>
+
+
         </div>
         <!--Map to be displayed when user chooses a task-->
         <div v-show="currentTask !== null" id="map2"></div>
@@ -130,18 +150,20 @@
         </div>
         <!-- Mission Complete Modal -->
         <!-- Button trigger modal -->
-        <button id="mis-com-button" type="button" style="display: none;" data-toggle="modal" data-target="#mission-complete">
+        <button id="mis-com-button" type="button" style="display: none;" data-toggle="modal"
+            data-target="#mission-complete">
             Launch Modal
         </button>
-        <div class="modal fade" id="mission-complete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="mission-complete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                <h2 class="modal-title text-center" id="exampleModalLabel">
-                    <img class="mis-com" src="../images/mission_complete.png"/>
-                </h2>
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h2 class="modal-title text-center" id="exampleModalLabel">
+                            <img class="mis-com" src="../images/mission_complete.png" />
+                        </h2>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>

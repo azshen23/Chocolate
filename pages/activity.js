@@ -1,16 +1,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
-import { getAuth} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 import "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyBcDXz7O-3FkG2uCgTGWXY7Ay4aMyXE3N8",
-authDomain: "chocolate-2c71d.firebaseapp.com",
-projectId: "chocolate-2c71d",
-storageBucket: "chocolate-2c71d.appspot.com",
-messagingSenderId: "744292159993",
-appId: "1:744292159993:web:866b078a19b17b2d21ad28",
-measurementId: "G-3ZNXNEQ38Z"
+  apiKey: "AIzaSyBcDXz7O-3FkG2uCgTGWXY7Ay4aMyXE3N8",
+  authDomain: "chocolate-2c71d.firebaseapp.com",
+  projectId: "chocolate-2c71d",
+  storageBucket: "chocolate-2c71d.appspot.com",
+  messagingSenderId: "744292159993",
+  appId: "1:744292159993:web:866b078a19b17b2d21ad28",
+  measurementId: "G-3ZNXNEQ38Z"
 };
 
 // Initialize Firebase
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   // type one text in the typwriter
   // keeps calling itself until the text is finished
   function typeWriter(text, i, fnCallback) {
-    // chekc if text isn't finished yet
+    // check if text isn't finished yet
     if (i < (text.length)) {
       // add next character to strong
       document.querySelector("strong").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
@@ -96,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
     }
   }
   // shuffle the texts
-  motivation_quotes.shu
   // start the text animation
   StartTextAnimation(0);
 });
@@ -149,7 +148,7 @@ window.resultView = new Vue({
       //
       { description: "Play Softball at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
       { description: "Play Football at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
-      { description: "Play Scorrer at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
+      { description: "Play Soccer at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
       { description: "Outdoor Yoga at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
       { description: "Jog Along Trails at Matthaei Botanical Gardens", location: "ChIJR3mTeOSrPIgRF0CehvEp8Jg", points: 99 },
       //
@@ -219,6 +218,12 @@ window.resultView = new Vue({
       this.clickedTask = null;
       // Add new map for the functionality of user accepting the challenge
       this.showActivity(this.currentTaskMap);
+    },
+
+    cancelTask: function () {
+      // reset internal data
+      this.closeWindow();
+      this.currentTask = null;
     },
 
     searchMap: function (index) {
