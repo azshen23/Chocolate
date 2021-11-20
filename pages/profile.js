@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
 import { getAuth, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 import { getStorage, ref as ref1, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-storage.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+import { getDatabase, ref, onValue, set, update } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBcDXz7O-3FkG2uCgTGWXY7Ay4aMyXE3N8",
@@ -24,7 +24,7 @@ var uid = null;
 onAuthStateChanged(auth, (user) => {
   if (user) { 
     uid = user.uid;
-    console.log(uid)
+    // console.log(uid)
   } else {
     location.href= 'login.html'
   }
@@ -35,7 +35,10 @@ var resultView = new Vue({
       imageUrl: null,
       currentUserArray: null,
       picture_choose_clicked: false,
-      animals: ["beaver", "crab", "dog", "elephant", "fox", "giraffe", "hippo", "penguin", "squirrel", "turtle"]
+      badgeUrl: null,
+      animals: ["beaver", "crab", "dog", "elephant", "fox", "giraffe", "hippo", "penguin", "squirrel", "turtle"],
+      currentUserName: null,
+      currentUserPoints: null
     },
     methods: {
       //once user signout, the token should be cleared and they should be redirected to the login page
@@ -45,33 +48,77 @@ var resultView = new Vue({
         }).catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorMessage + " " + errorCode)
+          // console.log(errorMessage + " " + errorCode)
         });
       },
       picture_click: function(picture) {
+        const db = getDatabase();
+        set(ref(db, 'users/' + uid), {
+          name: this.currentUserArray['name'],
+          email: this.currentUserArray['email'],
+          currentTaskID: this.currentUserArray['currentTaskID'],
+          points: this.currentUserArray['points'],
+          image: picture,
+          badge: this.currentUserArray['badge']
+        })
+        .catch((error) => {
+            console.log(error.message)
+        });
+        //this.changePfPDatabase(picture)
         const storage = getStorage(app);
         var image = ref1(storage, '/profilepictures/' + picture);
-        console.log(image);
+        // console.log(image);
         getDownloadURL(image).then((url) =>{
-          console.log(url)
+          // console.log(url)
           this.imageUrl = url
         });
         // this.imageUrl = picture;
         this.picture_choose_clicked = false;
+
+      },
+      getBadgeUrl: function(badge){
+        const storage = getStorage(app);
+        var image = ref1(storage, '/badges/' + badge);
+        getDownloadURL(image).then((url) =>{
+          this.badgeUrl = url
+        });
       },
       getValues: function(){
-        console.log(uid);
+        // console.log(uid);
         var db = ref(getDatabase(), 'users');
-        console.log('users/' + uid.toString())
+        // console.log('users/' + uid.toString())
         onValue(db, (snapshot) => {
           var data = snapshot.val();
           this.currentUserArray = data[uid];
-          this.picture_click(this.currentUserArray['image'])
+          this.currentUserName = this.currentUserArray['name']
+          this.currentUserPoints = this.currentUserArray['points']
+          this.setPfp(this.currentUserArray['image'])
+          this.getBadgeUrl(this.currentUserArray['badge'])
         });
       },
       change_button_clicked: function() {
         this.picture_choose_clicked = true;
-      }
+      },
+      changePfPDatabase: function(picture)
+      {
+        const db = getDatabase();
+        set(ref(db, 'users/' + uid + '/image'), {
+          picture
+        })
+        .catch((error) => {
+            console.log(error.message)
+        });
+      },
+      setPfp: function(picture)
+      {
+        const storage = getStorage(app);
+        var image = ref1(storage, '/profilepictures/' + picture);
+        // console.log(image);
+        getDownloadURL(image).then((url) =>{
+          // console.log(url)
+          this.imageUrl = url
+        });
+      } 
     },
     beforeMount(){
       setTimeout(() => this.getValues(), 500);

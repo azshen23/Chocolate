@@ -16,44 +16,66 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 <style>
+body {
+  font-family: "OCR A Std", monospace;
+}
+#profile {
+    text-align: center;
+}
+#profile_img {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    margin-left: 45%;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
 #animal {
     width: 150px;
     height: 150px;
     margin: 20px;
 }
+#basic_info, #badge_info{
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+#points {
+    width: 50%;
+    margin-left: 25%;
+}
 </style>
 <body>
     <div id="profile">
         <!-- TODO PUT UR STUFF HERE -->
-        This is profile page
-        <button class="signOut" v-on:click="signOut">
-            Signout
-        </button>
+        <h2>This is profile page</h2>
+        <button type="button" class="btn btn-outline-secondary signOut" v-on:click="signOut">Signout</button>
         
         
         <!-- profile picture -->
-        <img id="animal" v-bind:src="imageUrl"/>
-
+        <img id="profile_img" v-bind:src="imageUrl"/>
+        
         <div v-show="!picture_choose_clicked">
-            <p>I want to change profile picture</p>
-            <button v-on:click="change_button_clicked">Change Picture</button>
+            <h4 style="display: inline;">I want to change profile picture: </h4>
+            <button type="button" class="btn btn-outline-success" v-on:click="change_button_clicked">Change Picture</button>
         </div>
         <div v-show="picture_choose_clicked">                       
             <img v-show="picture_choose_clicked" id="animal" v-for="picture in animals" v-bind:src="'../images/profile_animals/'+picture+'.png'" v-on:click="picture_click(picture + '.png')"/>
         </div>
 
         <div id="basic_info">
-            <p>{{ currentUserArray['name'] }}</p>
+            <h3>{{ currentUserName }}</h3>
         </div>
 
-        <div id="badge">
-            
+        <div id="badge_info">
+            <img id="badge" v-bind:src="badgeUrl"/>
         </div>
 
         <div id="points">
+            <p>Points until next badge</p>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" v-bind:aria-valuenow="currentUserArray['points']" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
+                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="{'width': currentUserPoints + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
+                <span>current earned: {{ currentUserPoints }}</span>
+            </div>
         </div>
 
     </div>
