@@ -48,8 +48,7 @@ var resultView = new Vue({
           var db = ref(getDatabase(), 'users');
           onValue(db, (snapshot) => {
             var data = snapshot.val();
-            console.log(orderBySubKey(data, 'points'));
-            this.leaderboardArray = orderBySubKey(data, 'points')
+            this.leaderboardArray = orderBySubKey(data, 'points').reverse()
           });
         }
     },
