@@ -23,7 +23,6 @@ var uid = null;
 onAuthStateChanged(auth, (user) => {
   if (user) { 
     uid = user.uid;
-    // console.log(uid)
   } else {
     location.href= 'login.html'
   }
@@ -48,7 +47,6 @@ var resultView = new Vue({
         }).catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          // console.log(errorMessage + " " + errorCode)
         });
       },
       picture_click: function(picture) {
@@ -65,15 +63,11 @@ var resultView = new Vue({
         .catch((error) => {
             console.log(error.message)
         });
-        //this.changePfPDatabase(picture)
         const storage = getStorage(app);
         var image = ref1(storage, '/profilepictures/' + picture);
-        // console.log(image);
         getDownloadURL(image).then((url) =>{
-          // console.log(url)
           this.imageUrl = url
         });
-        // this.imageUrl = picture;
         this.picture_choose_clicked = false;
 
       },
@@ -85,9 +79,7 @@ var resultView = new Vue({
         });
       },
       getValues: function(){
-        // console.log(uid);
         var db = ref(getDatabase(), 'users');
-        // console.log('users/' + uid.toString())
         onValue(db, (snapshot) => {
           var data = snapshot.val();
           this.currentUserArray = data[uid];
@@ -115,9 +107,7 @@ var resultView = new Vue({
       {
         const storage = getStorage(app);
         var image = ref1(storage, '/profilepictures/' + picture);
-        // console.log(image);
         getDownloadURL(image).then((url) =>{
-          // console.log(url)
           this.imageUrl = url
         });
       } 
