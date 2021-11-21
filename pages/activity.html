@@ -91,8 +91,8 @@
             </div>
         </nav>
         <div class="flx">
-            <strong></strong>
-            <h1> {{ currentTask === null ? " Today's Mission" : "Current Mission" }} </h1>
+            <strong id="motivation"></strong>
+            <h1> {{ currentTask === null ? " Today's Missions" : "Current Mission" }} </h1>
             <div v-bind:class="(currentTask === null ? 'btn btn-outline-dark' : '')"
                 v-show="(!taskCompleted[0] && (currentTask === null || task1 === currentTask))"
                 v-on:click="searchMap(task1)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
@@ -117,9 +117,15 @@
             <div v-show="taskCompleted[2] && (currentTask === null)">
                 {{allTasks[task3]['description']}} - COMPLETED!
             </div>
-            <div v-bind:class="(currentTask !== null ? 'btn btn-outline-dark' : '')" v-show="currentTask !== null"
-                v-on:click="cancelTask">
-                Cancel
+            <div v-show="currentTask !== null">
+                <div v-bind:class="(currentTask !== null ? 'btn btn-outline-dark' : '')" type="button"
+                    data-toggle="modal" data-target="#self-complete">
+                    I Completed the Mission
+                </div>
+                <div v-bind:class="(currentTask !== null ? 'btn btn-outline-dark' : '')" type="button"
+                    data-toggle="modal" data-target="#cancel-mission">
+                    Cancel the Mission
+                </div>
             </div>
 
 
@@ -165,6 +171,46 @@
                         <h2 class="modal-title text-center" id="exampleModalLabel">
                             <img class="mis-com" src="../images/mission_complete.png" />
                         </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal For Self-Completing the Mission -->
+        <div class="modal fade" id="self-complete" tabindex="-1" role="dialog" aria-labelledby="self-complete-mission" aria-hidden="true"
+            data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <p>
+                            I pinky swear that I have truly completed the mission. It's just that my brwoser's location tracking is not working.
+                        </p>
+                        <button type="button" class="btn btn-primary"  data-dismiss="modal" v-on:click="completeActivity">I Pinky Swear</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Nope</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal For Cancelling the Mission -->
+        <div class="modal fade" id="cancel-mission" tabindex="-1" role="dialog" aria-labelledby="cancel-mission" aria-hidden="true"
+            data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <p>
+                            Are you sure you want cancel the mission?
+                        </p>
+                        <button type="button" class="btn btn-primary" v-on:click="cancelTask" data-dismiss="modal" data-toggle="modal" data-target="#mission-cancelled"> Yeah</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No! I will not!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal to Dispay When Mission is Cancelled -->
+        <div class="modal fade" id="mission-cancelled" tabindex="-1" role="dialog" aria-labelledby="mission-cancelled" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <strong id="game-over"></strong>
                     </div>
                 </div>
             </div>

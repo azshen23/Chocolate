@@ -31,6 +31,9 @@ const auth = getAuth();
 // GTA San Andreas Mission Passed Theme
 // https://www.youtube.com/watch?v=7lsdJDiJ0QE
 var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
+// Undertale Soundtrack - Determination
+// https://www.youtube.com/watch?v=h1wSPmlZV-w
+var determination = new Audio("../sound/Determination.mp3");
 
 
 // Motivational Speech for the user
@@ -59,46 +62,41 @@ var motivation_quotes = [
 ];
 
 // display the motivational text, one character at a time
-document.addEventListener('DOMContentLoaded', function (event) {
-  // type one text in the typwriter
-  // keeps calling itself until the text is finished
-  function typeWriter(text, i, fnCallback) {
-    // check if text isn't finished yet
-    if (i < (text.length)) {
-      // add next character to strong
-      document.querySelector("strong").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+// type one text in the typwriter
+// keeps calling itself until the text is finished
+function typeWriter(text, i, ID, fnCallback) {
+  // check if text isn't finished yet
+  if (i < (text.length)) {
+    // add next character to strong
+    document.getElementById(ID).innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+    // wait for a while and call this function again for next character
+    setTimeout(function () {
+      typeWriter(text, i + 1, ID, fnCallback)
+    }, 100);
+  }
+  // text finished, call callback if there is a callback function
+  else if (typeof fnCallback == 'function') {
+    // call callback after timeout
+    setTimeout(fnCallback, 10000);
+  }
+}
+// start a typewriter animation for a text in the dataText array
+function StartTextAnimation(i, ID) {
+  if (typeof motivation_quotes[i] == 'undefined') {
+    setTimeout(function () {
+      StartTextAnimation(0, ID);
+    }, 10000);
+  }
+  // check if dataText[i] exists
+  if (i < motivation_quotes[i].length) {
+    // text exists! start typewriter animation
+    typeWriter(motivation_quotes[i], 0, ID, function () {
+      // after callback (and whole text has been animated), start next text
+      StartTextAnimation(i + 1, ID);
+    });
+  }
+}
 
-      // wait for a while and call this function again for next character
-      setTimeout(function () {
-        typeWriter(text, i + 1, fnCallback)
-      }, 100);
-    }
-    // text finished, call callback if there is a callback function
-    else if (typeof fnCallback == 'function') {
-      // call callback after timeout
-      setTimeout(fnCallback, 10000);
-    }
-  }
-  // start a typewriter animation for a text in the dataText array
-  function StartTextAnimation(i) {
-    if (typeof motivation_quotes[i] == 'undefined') {
-      setTimeout(function () {
-        StartTextAnimation(0);
-      }, 10000);
-    }
-    // check if dataText[i] exists
-    if (i < motivation_quotes[i].length) {
-      // text exists! start typewriter animation
-      typeWriter(motivation_quotes[i], 0, function () {
-        // after callback (and whole text has been animated), start next text
-        StartTextAnimation(i + 1);
-      });
-    }
-  }
-  // shuffle the texts
-  // start the text animation
-  StartTextAnimation(0);
-});
 
 window.resultView = new Vue({
   el: '#activity',
@@ -170,6 +168,7 @@ window.resultView = new Vue({
     clickedTask: null, // what the user clicks on
     currentTask: null, // what the user is actually doing right now
     taskCompleted: [false, false, false], // indicates whether task is completed
+    username: "zhaojer",
     //map start
     map: null,
     infowindow: null, // to display activity location
@@ -221,6 +220,11 @@ window.resultView = new Vue({
     },
 
     cancelTask: function () {
+      // display motivational speech
+      determination.play();
+      typeWriter("You cannot give up just yet...", 0, "game-over");
+      setTimeout(() => typeWriter(this.username.toUpperCase().concat("!"), 0, "game-over"), 7000);
+      setTimeout(() => typeWriter("Stay Determined!!!", 0, "game-over"), 14000);
       // reset internal data
       this.closeWindow();
       this.currentTask = null;
@@ -292,7 +296,7 @@ window.resultView = new Vue({
           },
           () => this.showError(whichMap), // on error
           { // additional settings
-            enableHighAccuracy: false, // no need for high accuracy, for now...
+            enableHighAccuracy: true, // enabled high accuracy
             timeout: 8000, // wait a max of 8 seconds for user's location
             maximumAge: 8000 // allow 8 seconds of cached user's location
           }
@@ -464,7 +468,11 @@ window.resultView = new Vue({
     },
   },
   mounted() {
+    // generate tasks
     this.getTasks();
+    // shuffle the texts
+    // start the text animation
+    StartTextAnimation(0, "motivation");
   }
 })
 
