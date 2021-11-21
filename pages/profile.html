@@ -34,7 +34,7 @@ body {
     display: flex;
     width: 150px;
     height: 150px;
-    margin-left: 45%;
+    margin-left: 46%;
     margin-top: 25px;
     margin-bottom: 30px;
 }
@@ -73,8 +73,7 @@ body {
     </nav>
     <div id="profile">
         <!-- TODO PUT UR STUFF HERE -->
-        <h2>This is profile page</h2>
-        <button type="button" class="btn btn-outline-secondary signOut" v-on:click="signOut">Signout</button>
+        
         
         
         <!-- profile picture -->
@@ -89,21 +88,23 @@ body {
         </div>
 
         <div id="basic_info">
-            <h3>{{ currentUserName }}</h3>
+            <h1>{{ currentUserArray.name }}</h3>
         </div>
 
         <div id="badge_info">
             <img id="badge" v-bind:src="badgeUrl"/>
         </div>
-
+        <div id ="level">
+            <h3>Level: {{currentUserArray.level}}</h3>
+        </div>
         <div id="points">
             <p>Points until next badge</p>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="{'width': currentUserPoints + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
-                <span>current earned: {{ currentUserPoints }} / 100</span>
+                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="{'width': currentUserArray.points + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
+                <span>current earned: {{ currentUserArray.points }} / 100</span>
             </div>
         </div>
-
+        <button type="button" class="btn btn-outline-secondary signOut" v-on:click="signOut" style ="margin-top: 20px">Signout</button>
     </div>
 
 </body>

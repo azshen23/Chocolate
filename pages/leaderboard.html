@@ -24,15 +24,26 @@
 
 </head>
 <style>
+    body {
+        font-family: "OCR A Std", monospace;
+        font-size: 30px;
+    }
     #leaderboard{
         display: flex;
         align-items: center;
         justify-content: center;
+
     }
-    .leaderboardTable{
-        display: flex;
-        width:60%;
+    #pfpSrc{
+        height: 50px;
+        width: 50px;
     }
+
+    #badgeSrc{
+        height: 45px;
+        width: 50px;
+    }
+    
 </style>
 
 <body>
@@ -54,40 +65,33 @@
             </a>
         </div>
     </nav>
-    <div id="leaderboard">  
-        <div class = "leaderboardTable">
-            <table class="table table-striped">
-                <thead>
-  
-                </thead>
-                <tbody>
-                <div id="leaders">
-                    <tr v-for="(result, index) in leaderboardArray" :key="index">
-                        <th scope="row">{{ index + 1 }}</th>
-                        <!-- <td>{{ result.badge }}</td> -->
-                        <td>{{ result.name }}</td>
-                        <td>{{ result.points }}</td>
-                      </tr>
-                </div>
-                  <!-- <div id="user">
-                    <tr> 
-                        <th scope="row">{{ currentUser.rank }}</th>
-                        <td>{{ currentUser.badge }}</td>
-                        <td>{{ currentUser.name }}</td>
-                        <td>{{ currentUser.points }}</td>
-                      </tr>
-                  </div> -->
-                  <!-- <tr>
-                    <th scope="row">rank</th>
-                    <th >badge</th>
-                    <th >name</th>
-                    <th >points</th>
-                  </tr> -->
-                </tbody>
-              </table>
-        </div>
-        
-    </div>
+    <div id="leaderboard" class = "align-items-center flex-column mt-3 d-flex">  
+        <table class="table table-striped" style = "width: 60%;">
+            <tbody>
+                <tr v-for="(result, index) in leaderboardArray">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td> <img id = "pfpSrc" v-bind:src = "result.image"></td>
+                    <td>{{ result.name }}</td>
+                    <td> <img id = "badgeSrc" v-bind:src = "result.badge"></td>
+                    <td>Level: {{ result.level}} </td>
+                    <td>{{ result.points % 100 }} points </td>
+                </tr>
+                <tr class="table-success">
+                    <th scope="row">{{currentUserPosition + 1}}</th>
+                    <td> <img id = "pfpSrc" v-bind:src = "currentUserPfpUrl"></td>
+                    <td>{{ currentUserArray.name }} (You)</td>
+                    <td> <img id = "badgeSrc" v-bind:src = "currentUserBadgeUrl"></td>
+                    <td>Level: {{ currentUserArray.level }} </td>
+                    <td>{{ currentUserArray.points % 100 }} points </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-dark" style =" width:60%;">
+            <tbody>
+                
+            </tbody>
+        </table>
+</div>
 
 </body>
 <script src="leaderboard.js" type="module"></script>

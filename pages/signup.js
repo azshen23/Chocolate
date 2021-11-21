@@ -77,7 +77,8 @@ function writeUserData(userId, name, email, photoURL) {
       currentTaskID: -1,
       points: 0,
       image: photoURL,
-      badge: "1.png"
+      badge: "1.png",
+      level: 1
     })
     .catch((error) => {
         console.log(error.message)

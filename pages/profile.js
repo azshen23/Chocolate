@@ -1,5 +1,4 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
 import { getAuth, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 import { getStorage, ref as ref1, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-storage.js";
 import { getDatabase, ref, onValue, set, update } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
@@ -38,7 +37,8 @@ var resultView = new Vue({
       badgeUrl: null,
       animals: ["beaver", "crab", "dog", "elephant", "fox", "giraffe", "hippo", "penguin", "squirrel", "turtle"],
       currentUserName: null,
-      currentUserPoints: null
+      currentUserPoints: null,
+      currentUserLevel: null
     },
     methods: {
       //once user signout, the token should be cleared and they should be redirected to the login page
@@ -59,7 +59,8 @@ var resultView = new Vue({
           currentTaskID: this.currentUserArray['currentTaskID'],
           points: this.currentUserArray['points'],
           image: picture,
-          badge: this.currentUserArray['badge']
+          badge: this.currentUserArray['badge'],
+          level: this.currentUserArray['level']
         })
         .catch((error) => {
             console.log(error.message)
@@ -94,6 +95,7 @@ var resultView = new Vue({
           this.currentUserPoints = this.currentUserArray['points']
           this.setPfp(this.currentUserArray['image'])
           this.getBadgeUrl(this.currentUserArray['badge'])
+          this.currentUserLevel = this.currentUserArray['level']
         });
       },
       change_button_clicked: function() {
