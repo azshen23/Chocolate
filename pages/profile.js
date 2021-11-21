@@ -24,7 +24,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) { 
     uid = user.uid;
   } else {
-    location.href= 'login.html'
+    location.href= 'index.html'
   }
 });
 var resultView = new Vue({
@@ -43,7 +43,7 @@ var resultView = new Vue({
       //once user signout, the token should be cleared and they should be redirected to the login page
       signOut: function(){
         signOut(auth).then(() => {
-          location.href = "login.html"
+          
         }).catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;

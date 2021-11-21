@@ -30,7 +30,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     uid = user.uid;
   } else {
-    location.href= 'login.html'
+    location.href= 'index.html'
   }
 });
 

@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-analytics.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+import { getAuth , onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 import "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 
 const firebaseConfig = {
@@ -15,22 +14,22 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth();
 
 //if user is currently not logged in a session, they will be redirected to the log in page
 //comment out for now since this well intefere with development of the page
-/* onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
   } else {
-    location.href= 'login.html'
+    location.href= 'index.html'
   }
-}); */
+});
+
 
 // GTA San Andreas Mission Passed Theme
 // https://www.youtube.com/watch?v=7lsdJDiJ0QE
-var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
+//var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
 // Undertale Soundtrack - Determination
 // https://www.youtube.com/watch?v=h1wSPmlZV-w
 var determination = new Audio("../sound/Determination.mp3");
