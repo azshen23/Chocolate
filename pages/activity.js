@@ -339,7 +339,7 @@ window.resultView = new Vue({
 
     completeActivity: function () {
       // play music
-      mission_passed_sound.play();
+      //mission_passed_sound.play();
       // display modal
       document.getElementById("mis-com-button").click();
       // reset internal data
