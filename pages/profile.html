@@ -2,27 +2,105 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Chocolate</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    <!-- Bootstrap v4.0 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-</head>
+    <link rel="stylesheet" href="activity.css">
 
+</head>
+<style>
+body {
+  font-family: "OCR A Std", monospace;
+}
+#profile {
+    text-align: center;
+}
+#profile_img {
+    display: flex;
+    width: 150px;
+    height: 150px;
+    margin-left: 46%;
+    margin-top: 25px;
+    margin-bottom: 30px;
+}
+#animal {
+    width: 150px;
+    height: 150px;
+    margin: 20px;
+}
+#basic_info, #badge_info{
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+#points {
+    width: 50%;
+    margin-left: 25%;
+}
+</style>
 <body>
+    <nav class="navbar navbar-light bg-light" id="universalHeader">
+        <div class="navbar-brand">
+            <a href="activity.html">
+                <img img class="activityIcon zoom" src="../images/home.jpg" alt="activityIcon">
+            </a>
+        </div>
+        <div class="navbar-brand navbar-center">
+            <a href="leaderboard.html">
+                <img class="leaderboardIcon zoom" src="../images/Golden-Trophy-PNG-Clipart-Background.png"
+                    alt="trophyIcon">
+            </a>
+        </div>
+        <div class="navbar-brand navbar-right">
+            <a href="profile.html">
+                <img img class="profileIcon zoom" src="../images/16363.png" alt="profileIcon">
+            </a>
+        </div>
+    </nav>
     <div id="profile">
-        <!-- TODO PUT UR STUFF HERE -->
-        This is profile page
-        <button class="signOut" v-on:click="signOut">
-            Signout
-        </button>
+        <!-- profile picture -->
+        <img id="profile_img" v-bind:src="imageUrl"/>
+        
+        <div v-show="!picture_choose_clicked">
+            <h4 style="display: inline;">I want to change profile picture: </h4>
+            <button type="button" class="btn btn-outline-success" v-on:click="change_button_clicked">Change Picture</button>
+        </div>
+        <div v-show="picture_choose_clicked">                       
+            <img v-show="picture_choose_clicked" id="animal" v-for="picture in animals" v-bind:src="'../images/profile_animals/'+picture+'.png'" v-on:click="picture_click(picture + '.png')"/>
+        </div>
+
+        <div id="basic_info">
+            <h1>{{ currentUserArray.name }}</h3>
+        </div>
+
+        <div id="badge_info">
+            <img id="badge" v-bind:src="badgeUrl"/>
+        </div>
+        <div id ="level">
+            <h3>Level: {{currentUserArray.level}}</h3>
+        </div>
+        <div id="points">
+            <p>Points until next badge</p>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="{'width': currentUserArray.points + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
+                <span>current earned: {{ currentUserArray.points }} / 100</span>
+            </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary signOut" v-on:click="signOut" style ="margin-top: 20px">Signout</button>
     </div>
 
 </body>

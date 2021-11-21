@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chocolate</title>
+    <!-- Bootstrap v4.0 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="activity.css">
+
+</head>
+<style>
+    body {
+        font-family: "OCR A Std", monospace;
+        font-size: 30px;
+    }
+    #leaderboard{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+    #pfpSrc{
+        height: 50px;
+        width: 50px;
+    }
+
+    #badgeSrc{
+        height: 45px;
+        width: 50px;
+    }
+    
+</style>
+
+<body>
+    <nav class="navbar navbar-light bg-light" id="universalHeader">
+        <div class="navbar-brand">
+            <a href="activity.html">
+                <img img class="activityIcon zoom" src="../images/home.jpg" alt="activityIcon">
+            </a>
+        </div>
+        <div class="navbar-brand navbar-center">
+            <a href="leaderboard.html">
+                <img class="leaderboardIcon zoom" src="../images/Golden-Trophy-PNG-Clipart-Background.png"
+                    alt="trophyIcon">
+            </a>
+        </div>
+        <div class="navbar-brand navbar-right">
+            <a href="profile.html">
+                <img img class="profileIcon zoom" src="../images/16363.png" alt="profileIcon">
+            </a>
+        </div>
+    </nav>
+    <div id="leaderboard" class = "align-items-center flex-column mt-3 d-flex">  
+        <table class="table table-striped" style = "width: 60%;">
+            <tbody>
+                <tr v-for="(result, index) in leaderboardArray">
+                    <th scope="row">{{ index + 1 }}</th>
+                    <td> <img id = "pfpSrc" v-bind:src = "result.image"></td>
+                    <td>{{ result.name }}</td>
+                    <td> <img id = "badgeSrc" v-bind:src = "result.badge"></td>
+                    <td>Level: {{ result.level}} </td>
+                    <td>{{ result.points % 100 }} points </td>
+                </tr>
+                <tr class="table-success">
+                    <th scope="row">{{currentUserPosition + 1}}</th>
+                    <td> <img id = "pfpSrc" v-bind:src = "currentUserPfpUrl"></td>
+                    <td>{{ currentUserArray.name }} (You)</td>
+                    <td> <img id = "badgeSrc" v-bind:src = "currentUserBadgeUrl"></td>
+                    <td>Level: {{ currentUserArray.level }} </td>
+                    <td>{{ currentUserArray.points % 100 }} points </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-dark" style =" width:60%;">
+            <tbody>
+                
+            </tbody>
+        </table>
+</div>
+
+</body>
+<script src="leaderboard.js" type="module"></script>
+
+
+</html>

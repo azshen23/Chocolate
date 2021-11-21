@@ -40,6 +40,8 @@ var resultView = new Vue({
     methods: {
         signin: function(){
           signInWithEmailAndPassword(auth, this.email, this.password)
+            console.log(this.email)
+            console.log(this.password)
             .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;

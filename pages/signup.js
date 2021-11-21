@@ -47,17 +47,15 @@ var resultView = new Vue({
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                writeUserData(user.uid, this.name, this.email)
+                writeUserData(user.uid, this.name, this.email, "beaver.png")
                 updateProfile(auth.currentUser, {
-                    displayName: this.name
+                    displayName: this.name,
+                    photoURL: "beaver.png"
                 }).catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     console.log(errorMessage + " " + errorCode)
                 })
-
-                
-
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -71,12 +69,16 @@ var resultView = new Vue({
 
 
 //add user to datatbase
-function writeUserData(userId, name, email) {
+function writeUserData(userId, name, email, photoURL) {
     const db = getDatabase();
     set(ref(db, 'users/' + userId), {
       name: name,
       email: email,
-      currentTaskID: -1
+      currentTaskID: -1,
+      points: 0,
+      image: photoURL,
+      badge: "1.png",
+      level: 1
     })
     .catch((error) => {
         console.log(error.message)
