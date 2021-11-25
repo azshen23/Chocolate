@@ -78,7 +78,7 @@ body {
         </div>
         <div class="navbar-brand navbar-right">
             <a href="profile.html">
-                <img img class="profileIcon zoom" v-bind:src="imageUrl" alt="profileIcon">
+                <img img class="profileIcon zoom" v-bind:src="imageUrl || '../images/16363.png'" alt="profileIcon">
             </a>
         </div>
     </nav>
@@ -107,7 +107,7 @@ body {
         <div id="points">
             <p>Points until next badge</p>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="{'width': currentUserArray.points % 100 + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="currentUserArray && {'width': currentUserArray.points % 100 + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
                 <span>current earned: {{ currentUserArray ? (currentUserArray.points % 100) : '' }} / 100</span>
             </div>
         </div>
