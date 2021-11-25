@@ -28,12 +28,19 @@
         font-family: "OCR A Std", monospace;
         font-size: 30px;
     }
-    #leaderboard{
+    .leaderboard{
         display: flex;
         align-items: center;
         justify-content: center;
 
     }
+
+    .zoom:hover {
+        -webkit-transform: scale(1.5);
+        /* Safari 3-8 */
+        transform: scale(1.5);
+    }
+
     #pfpSrc{
         height: 50px;
         width: 50px;
@@ -43,46 +50,53 @@
         height: 45px;
         width: 50px;
     }
+    [v-cloak] {
+        display: none;
+    }
     
 </style>
 
 <body>
+    <div id="leaderboard" style ="text-align: center;" v-cloak>
     <nav class="navbar navbar-light bg-light" id="universalHeader">
         <div class="navbar-brand">
             <a href="activity.html">
-                <img img class="activityIcon zoom" src="../images/home.jpg" alt="activityIcon">
+                <img img class="activityIcon zoom" src="../images/home.png" alt="activityIcon">
             </a>
         </div>
         <div class="navbar-brand navbar-center">
             <a href="leaderboard.html">
-                <img class="leaderboardIcon zoom" src="../images/Golden-Trophy-PNG-Clipart-Background.png"
+                <img class="leaderboardIcon zoom" src="../images/trophy.png"
                     alt="trophyIcon">
             </a>
         </div>
         <div class="navbar-brand navbar-right">
             <a href="profile.html">
-                <img img class="profileIcon zoom" src="../images/16363.png" alt="profileIcon">
+                <img img class="profileIcon zoom" v-bind:src="currentUserPfpUrl || '../images/16363.png'" alt="profileIcon">
             </a>
         </div>
     </nav>
-    <div id="leaderboard" class = "align-items-center flex-column mt-3 d-flex">  
-        <table class="table table-striped" style = "width: 60%;">
+    <h style ="font-size: 50px">
+        Leaderboard
+    </h>
+    <div class = "align-items-center flex-column mt-3 d-flex leaderboard">  
+        <table class="table table-striped" style = "width: 60%;"> 
             <tbody>
                 <tr v-for="(result, index) in leaderboardArray">
                     <th scope="row">{{ index + 1 }}</th>
                     <td> <img id = "pfpSrc" v-bind:src = "result.image"></td>
-                    <td>{{ result.name }}</td>
+                    <td>{{ result && result.name }}</td>
                     <td> <img id = "badgeSrc" v-bind:src = "result.badge"></td>
-                    <td>Level: {{ result.level}} </td>
-                    <td>{{ result.points % 100 }} points </td>
+                    <td>Level: {{ result && result.level}} </td>
+                    <td>{{ result && result.points }} points </td>
                 </tr>
                 <tr class="table-success">
                     <th scope="row">{{currentUserPosition + 1}}</th>
                     <td> <img id = "pfpSrc" v-bind:src = "currentUserPfpUrl"></td>
-                    <td>{{ currentUserArray.name }} (You)</td>
+                    <td>{{ currentUserArray && currentUserArray.name }} (You)</td>
                     <td> <img id = "badgeSrc" v-bind:src = "currentUserBadgeUrl"></td>
-                    <td>Level: {{ currentUserArray.level }} </td>
-                    <td>{{ currentUserArray.points % 100 }} points </td>
+                    <td>Level: {{ currentUserArray && currentUserArray.level }} </td>
+                    <td>{{ currentUserArray && currentUserArray.points }} points </td>
                 </tr>
             </tbody>
         </table>
@@ -92,7 +106,7 @@
             </tbody>
         </table>
 </div>
-
+</div>
 </body>
 <script src="leaderboard.js" type="module"></script>
 

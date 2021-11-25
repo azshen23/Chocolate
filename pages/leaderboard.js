@@ -51,7 +51,7 @@ var resultView = new Vue({
           var db = ref(getDatabase(), 'users');
           onValue(db, (snapshot) => {
             var data = snapshot.val();
-            this.leaderboardArray = orderBySubKey(data, 'points').slice(0, 10).reverse()
+            this.leaderboardArray = orderBySubKey(data, 'points').reverse().slice(0, 10)
             for (var i = 0; i < this.leaderboardArray.length; i++)
             {
               this.getImageUrl(i)
@@ -69,31 +69,14 @@ var resultView = new Vue({
         },
         //get image url from databse
         getImageUrl: function(i){
-          const storage = getStorage(app);
-          var image = ref1(storage, '/profilepictures/' + this.leaderboardArray[i]['image']);
-          var image2 = ref1(storage, '/badges/' + this.leaderboardArray[i]['badge']);
-
-          getDownloadURL(image).then((url) =>{
-            this.leaderboardArray[i]['image'] = url
-          });
-
-          getDownloadURL(image2).then((url) =>{
-            this.leaderboardArray[i]['badge'] = url
-          });
+          this.leaderboardArray[i]['badge'] = "../images/badges/" + this.leaderboardArray[i]['badge']
+          this.leaderboardArray[i]['image'] = "../images/profile_animals/" +  this.leaderboardArray[i]['image']
         },
         //get currentUser image urls
         getCurrentUserImageUrl: function(){
-          const storage = getStorage(app);
-          var image = ref1(storage, '/profilepictures/' + this.currentUserArray['image']);
-          var image2 = ref1(storage, '/badges/' + this.currentUserArray['badge']);
 
-          getDownloadURL(image).then((url) =>{
-            this.currentUserPfpUrl = url
-          });
-
-          getDownloadURL(image2).then((url) =>{
-            this.currentUserBadgeUrl = url
-          });
+          this.currentUserBadgeUrl = "../images/badges/" + this.currentUserArray['badge']
+          this.currentUserPfpUrl = "../images/profile_animals/" + this.currentUserArray['image']
         }
     },
     beforeMount(){

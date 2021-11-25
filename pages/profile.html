@@ -38,6 +38,13 @@ body {
     margin-top: 25px;
     margin-bottom: 30px;
 }
+
+.zoom:hover {
+        -webkit-transform: scale(1.5);
+        /* Safari 3-8 */
+        transform: scale(1.5);
+    }
+
 #animal {
     width: 150px;
     height: 150px;
@@ -51,27 +58,30 @@ body {
     width: 50%;
     margin-left: 25%;
 }
+[v-cloak] {
+        display: none;
+}
 </style>
 <body>
     <nav class="navbar navbar-light bg-light" id="universalHeader">
         <div class="navbar-brand">
             <a href="activity.html">
-                <img img class="activityIcon zoom" src="../images/home.jpg" alt="activityIcon">
+                <img img class="activityIcon zoom" src="../images/home.png" alt="activityIcon">
             </a>
         </div>
         <div class="navbar-brand navbar-center">
             <a href="leaderboard.html">
-                <img class="leaderboardIcon zoom" src="../images/Golden-Trophy-PNG-Clipart-Background.png"
+                <img class="leaderboardIcon zoom" src="../images/trophy.png"
                     alt="trophyIcon">
             </a>
         </div>
         <div class="navbar-brand navbar-right">
             <a href="profile.html">
-                <img img class="profileIcon zoom" src="../images/16363.png" alt="profileIcon">
+                <img img class="profileIcon zoom" v-bind:src="imageUrl" alt="profileIcon">
             </a>
         </div>
     </nav>
-    <div id="profile">
+    <div id="profile" v-cloak>
         <!-- profile picture -->
         <img id="profile_img" v-bind:src="imageUrl"/>
         
@@ -96,8 +106,8 @@ body {
         <div id="points">
             <p>Points until next badge</p>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="{'width': currentUserArray.points + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
-                <span>current earned: {{ currentUserArray.points }} / 100</span>
+                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="{'width': currentUserArray.points % 100 + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
+                <span>current earned: {{ currentUserArray.points % 100 }} / 100</span>
             </div>
         </div>
         <button type="button" class="btn btn-outline-secondary signOut" v-on:click="signOut" style ="margin-top: 20px">Signout</button>

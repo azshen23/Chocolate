@@ -51,32 +51,21 @@ var resultView = new Vue({
       },
       picture_click: function(picture) {
         const db = getDatabase();
-        set(ref(db, 'users/' + uid), {
-          name: this.currentUserArray['name'],
-          email: this.currentUserArray['email'],
-          currentTaskID: this.currentUserArray['currentTaskID'],
-          points: this.currentUserArray['points'],
-          image: picture,
-          badge: this.currentUserArray['badge'],
-          level: this.currentUserArray['level']
-        })
+        set(ref(db, 'users/' + uid + "/image"), picture)
         .catch((error) => {
             console.log(error.message)
         });
-        const storage = getStorage(app);
+        this.imageUrl = "../images/profile_animals/" + picture
+        /* const storage = getStorage(app);
         var image = ref1(storage, '/profilepictures/' + picture);
         getDownloadURL(image).then((url) =>{
           this.imageUrl = url
-        });
+        }); */
         this.picture_choose_clicked = false;
 
       },
       getBadgeUrl: function(badge){
-        const storage = getStorage(app);
-        var image = ref1(storage, '/badges/' + badge);
-        getDownloadURL(image).then((url) =>{
-          this.badgeUrl = url
-        });
+        this.badgeUrl = "../images/badges/" + badge
       },
       getValues: function(){
         var db = ref(getDatabase(), 'users');
@@ -93,23 +82,9 @@ var resultView = new Vue({
       change_button_clicked: function() {
         this.picture_choose_clicked = true;
       },
-      changePfPDatabase: function(picture)
-      {
-        const db = getDatabase();
-        set(ref(db, 'users/' + uid + '/image'), {
-          picture
-        })
-        .catch((error) => {
-            console.log(error.message)
-        });
-      },
       setPfp: function(picture)
       {
-        const storage = getStorage(app);
-        var image = ref1(storage, '/profilepictures/' + picture);
-        getDownloadURL(image).then((url) =>{
-          this.imageUrl = url
-        });
+        this.imageUrl = "../images/profile_animals/" + picture
       } 
     },
     beforeMount(){

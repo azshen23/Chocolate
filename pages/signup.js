@@ -78,7 +78,15 @@ function writeUserData(userId, name, email, photoURL) {
       points: 0,
       image: photoURL,
       badge: "1.png",
-      level: 1
+      level: 1,
+      task1: -1,
+      task2: -1,
+      task3: -1,
+      timestampTaskStart: -1,
+      timestampLastMidnight: -1,
+      task1Completed: false,
+      task2Completed: false,
+      task3Completed: false
     })
     .catch((error) => {
         console.log(error.message)
