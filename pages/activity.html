@@ -67,30 +67,43 @@
     .flx div {
         margin: 7px;
     }
+
+    #loading-img {
+        position: relative;
+        width: 20%;
+        height: 20%;
+    }
+
+    [v-cloak] {
+        display: none;
+    }
 </style>
 
 <body>
-    <div id="activity">
+    <div id="activity" v-cloak>
         <!-- TODO PUT UR STUFF HERE -->
         <nav class="navbar navbar-light bg-light" id="universalHeader">
             <div class="navbar-brand">
                 <a href="activity.html">
-                    <img img class="activityIcon zoom" src="../images/home.jpg" alt="activityIcon">
+                    <img img class="activityIcon zoom" src="../images/home.png" alt="activityIcon">
                 </a>
             </div>
             <div class="navbar-brand navbar-center">
                 <a href="leaderboard.html">
-                    <img class="leaderboardIcon zoom" src="../images/Golden-Trophy-PNG-Clipart-Background.png"
+                    <img class="leaderboardIcon zoom" src="../images/trophy.png"
                         alt="trophyIcon">
                 </a>
             </div>
             <div class="navbar-brand navbar-right">
                 <a href="profile.html">
-                    <img img class="profileIcon zoom" src="../images/16363.png" alt="profileIcon">
+                    <img img class="profileIcon zoom" v-bind:src="userImage ? userImage.url : '../images/16363.png'" alt="profileIcon">
                 </a>
             </div>
         </nav>
-        <div class="flx">
+        <div v-show="!hasFetched" class="text-center">
+            <img id="loading-img" src="../images/loading.gif" alt="loading..."/>
+        </div>
+        <div v-show="hasFetched" class="flx">
             <strong id="motivation"></strong>
             <h1> {{ currentTask === null ? " Today's Missions" : "Current Mission" }} </h1>
             <div v-bind:class="(currentTask === null ? 'btn btn-outline-dark' : '')"

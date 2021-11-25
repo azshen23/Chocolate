@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
-import { getAuth , onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
-import "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
+import { getAuth, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+import { getStorage, ref as ref1, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-storage.js";
+import { getDatabase, ref, onValue, set, update, get, child } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBcDXz7O-3FkG2uCgTGWXY7Ay4aMyXE3N8",
@@ -15,12 +16,14 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+var uid = null;
+const db = getDatabase();
 
 //if user is currently not logged in a session, they will be redirected to the log in page
 //comment out for now since this well intefere with development of the page
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    const uid = user.uid;
+    uid = user.uid;
   } else {
     location.href= 'index.html'
   }
@@ -101,73 +104,73 @@ window.resultView = new Vue({
   el: '#activity',
   data: {
     allTasks: [
-      { description: "Do Leg Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
-      { description: "Do Chest Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
-      { description: "Do Back Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
-      { description: "Run on the field near IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
-      { description: "Play Basketball at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 99 },
+      { description: "Do Leg Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 5 },
+      { description: "Do Chest Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 5 },
+      { description: "Do Back Workout at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 5 },
+      { description: "Run on the field near IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 5 },
+      { description: "Play Basketball at IM Building", location: "ChIJfcTFNjauPIgRyB9rkIa_iEQ", points: 5 },
       //
-      { description: "Play Tennis at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
-      { description: "Play Soccer at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
-      { description: "Play Basketball at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
-      { description: "Run Along Track at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
-      { description: "Play Ultimate Frisbee at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 99 },
+      { description: "Play Tennis at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 5 },
+      { description: "Play Soccer at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 5 },
+      { description: "Play Basketball at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 5 },
+      { description: "Run Along Track at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 5 },
+      { description: "Play Ultimate Frisbee at Palmer Field", location: "ChIJhyLAjUKuPIgRNEVG1C1mLe4", points: 5 },
       //
-      { description: "Go Jogging at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 99 },
-      { description: "Go Jogging at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 99 },
-      { description: "Go Hiking at Bird Hills Nature Area", location: "ChIJpx8iS_6tPIgRSNEzjRsGJPI", points: 99 },
-      { description: "Go Jogging at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 99 },
-      { description: "Go Jogging at West Park", location: "ChIJmUmUpRiuPIgR1H8_Tc3aOgo", points: 99 },
+      { description: "Go Jogging at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 5 },
+      { description: "Go Jogging at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 5 },
+      { description: "Go Hiking at Bird Hills Nature Area", location: "ChIJpx8iS_6tPIgRSNEzjRsGJPI", points: 5 },
+      { description: "Go Jogging at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 5 },
+      { description: "Go Jogging at West Park", location: "ChIJmUmUpRiuPIgR1H8_Tc3aOgo", points: 5 },
       //
-      { description: "Do Leg Workout at IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
-      { description: "Do Chest Workout at IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
-      { description: "Do Back Workout at IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
-      { description: "Run on the field near IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
-      { description: "Play Basketball at IM Building", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 99 },
+      { description: "Do Leg Workout at CCRB", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 5 },
+      { description: "Do Chest Workout at CCRB", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 5 },
+      { description: "Do Back Workout at CCRB", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 5 },
+      { description: "Run on the field near CCRB", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 5 },
+      { description: "Play Basketball at CCRB", location: "ChIJ06khDUOuPIgRpSjRFPKPV-Y", points: 5 },
       //
-      { description: "Go Picnicking at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 99 },
-      { description: "Go Hiking at Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 99 },
-      { description: "Go Jogging at County Farm Park", location: "ChIJWev0zBivPIgR2yVMyaMoaTI", points: 99 },
-      { description: "Observe Nature at Nichols Arboretum", location: "ChIJAZAd-l2uPIgRiGn9BwszutQ", points: 99 },
-      { description: "Go Take a Walk at The Diag", location: "ChIJQyjaRiqvPIgRLFzfxITsj7Q", points: 99 },
+      { description: "Go Picnicking at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 5 },
+      { description: "Go Hiking at Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 5 },
+      { description: "Go Jogging at County Farm Park", location: "ChIJWev0zBivPIgR2yVMyaMoaTI", points: 5 },
+      { description: "Observe Nature at Nichols Arboretum", location: "ChIJAZAd-l2uPIgRiGn9BwszutQ", points: 5 },
+      { description: "Go Take a Walk at The Diag", location: "ChIJQyjaRiqvPIgRLFzfxITsj7Q", points: 5 },
       //
-      { description: "Have an Outdoor Picnic at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 99 },
-      { description: "Explore nature at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 99 },
-      { description: "Outdoor meditation at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 99 },
-      { description: "Go Vist Michigan Stadium", location: "ChIJTd-grjOuPIgRrdNQzLYIANc", points: 99 },
-      { description: "Go Vist the Museum of Natural History", location: "ChIJhy11v0OuPIgR33uMs6yLATo", points: 99 },
+      { description: "Have an Outdoor Picnic at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 5 },
+      { description: "Explore nature at Fuller Park", location: "ChIJdcRFoWWuPIgRD447SYGTkJw", points: 5 },
+      { description: "Outdoor meditation at Bandemer Park", location: "ChIJqcFSmuGtPIgRHT2h_UQHXwE", points: 5 },
+      { description: "Go Visit Michigan Stadium", location: "ChIJTd-grjOuPIgRrdNQzLYIANc", points: 5 },
+      { description: "Go Visit the Museum of Natural History", location: "ChIJhy11v0OuPIgR33uMs6yLATo", points: 5 },
       //
-      { description: "Go Vist the Museum of Art", location: "ChIJbbmqg0euPIgRzlnhZSj2z8g", points: 99 },
-      { description: "Go Visit the Museum of Natural History", location: "ChIJhy11v0OuPIgR33uMs6yLATo", points: 99 },
-      { description: "Play Golf at UofM Golf Course", location: "ChIJvfjVlMuvPIgR43RxgKMGHVU", points: 99 },
-      { description: "Visit Matthaei Botanical Gardens", location: "ChIJR3mTeOSrPIgRF0CehvEp8Jg", points: 99 },
-      { description: "Rock Climb at Planet Rock", location: "ChIJtXJtoQuxPIgRuF7yf1dAMsA", points: 99 },
+      { description: "Go Visit the Museum of Art", location: "ChIJbbmqg0euPIgRzlnhZSj2z8g", points: 5 },
+      { description: "Go to Domino’s Farms Petting Farm", location: "ChIJZckO2AqsPIgRGttt3hsM4T4", points: 5 },
+      { description: "Play Golf at UofM Golf Course", location: "ChIJvfjVlMuvPIgR43RxgKMGHVU", points: 5 },
+      { description: "Visit Matthaei Botanical Gardens", location: "ChIJR3mTeOSrPIgRF0CehvEp8Jg", points: 5 },
+      { description: "Rock Climb at Planet Rock", location: "ChIJtXJtoQuxPIgRuF7yf1dAMsA", points: 5 },
       //
-      { description: "Play Softball at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
-      { description: "Play Football at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
-      { description: "Play Soccer at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
-      { description: "Outdoor Yoga at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 99 },
-      { description: "Jog Along Trails at Matthaei Botanical Gardens", location: "ChIJR3mTeOSrPIgRF0CehvEp8Jg", points: 99 },
+      { description: "Play Softball at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 5 },
+      { description: "Play Football at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 5 },
+      { description: "Play Soccer at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 5 },
+      { description: "Outdoor Yoga at Mitchell Field", location: "ChIJKYj1jmGuPIgRMPTVnTzVgwY", points: 5 },
+      { description: "Jog Along Trails at Matthaei Botanical Gardens", location: "ChIJR3mTeOSrPIgRF0CehvEp8Jg", points: 5 },
       //
-      { description: "Observe Nature at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 99 },
-      { description: "Clean Up Trash at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 99 },
-      { description: "Jog Along Trails at Lillie Park", location: "ChIJT7PJY2CvPIgRv3n7r5fSqi0", points: 99 },
-      { description: "Outdoor Yoga at Lillie Park", location: "ChIJT7PJY2CvPIgRv3n7r5fSqi0", points: 99 },
-      { description: "Golf at Stonebridge Golf Club", location: "ChIJkTJkerO6PIgRwUnVaV_Hbcc", points: 99 },
+      { description: "Observe Nature at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 5 },
+      { description: "Clean Up Trash at Gallop Park", location: "ChIJERCql1CvPIgRklwPJbhyMsY", points: 5 },
+      { description: "Jog Along Trails at Lillie Park", location: "ChIJT7PJY2CvPIgRv3n7r5fSqi0", points: 5 },
+      { description: "Outdoor Yoga at Lillie Park", location: "ChIJT7PJY2CvPIgRv3n7r5fSqi0", points: 5 },
+      { description: "Golf at Stonebridge Golf Club", location: "ChIJkTJkerO6PIgRwUnVaV_Hbcc", points: 5 },
       //
-      { description: "Bike the Trails of Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 99 },
-      { description: "Walk Through Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 99 },
-      { description: "Walk to Farmers Market", location: "ChIJ-a_wdBauPIgRwd8hiA1d29k", points: 99 },
-      { description: "Drop in Hockey at the Ice Cube", location: "ChIJxQUa3zmwPIgRJhizKNGdmOU", points: 99 },
-      { description: "Go Ice-Skating at the Ice Cube", location: "ChIJxQUa3zmwPIgRJhizKNGdmOU", points: 99 },
+      { description: "Bike the Trails of Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 5 },
+      { description: "Walk Through Furstenberg Nature Area", location: "ChIJa88lL-2uPIgRbJO40cTmSyk", points: 5 },
+      { description: "Walk to Farmers Market", location: "ChIJ-a_wdBauPIgRwd8hiA1d29k", points: 5 },
+      { description: "Drop in Hockey at the Ice Cube", location: "ChIJxQUa3zmwPIgRJhizKNGdmOU", points: 5 },
+      { description: "Go Ice-Skating at the Ice Cube", location: "ChIJxQUa3zmwPIgRJhizKNGdmOU", points: 5 },
     ],
     task1: 0,
-    task2: 1,
-    task3: 2,
+    task2: 0,
+    task3: 0,
     clickedTask: null, // what the user clicks on
     currentTask: null, // what the user is actually doing right now
     taskCompleted: [false, false, false], // indicates whether task is completed
-    username: "zhaojer",
+    //username: "zhaojer",
     //map start
     map: null,
     infowindow: null, // to display activity location
@@ -182,6 +185,10 @@ window.resultView = new Vue({
     locationOn: false,
     // another map for when user selected a currentTask
     currentTaskMap: null,
+    // user data
+    currentUserArray: null,
+    midnightTime: null,
+    hasFetched: false,
   },
   methods: {
     getTasks: function () {
@@ -207,11 +214,41 @@ window.resultView = new Vue({
           }
         }
       }
+      set(ref(db, 'users/' + uid + "/task1"), this.task1)
+      .catch((error) => {
+          console.log(error.message)
+      });
+      set(ref(db, 'users/' + uid + "/task2"), this.task2)
+      .catch((error) => {
+          console.log(error.message)
+      });
+      set(ref(db, 'users/' + uid + "/task3"), this.task3)
+      .catch((error) => {
+          console.log(error.message)
+      });
+
+      set(ref(db, 'users/' + uid + "/task1Completed"), false)
+      .catch((error) => {
+          console.log(error.message)
+      });
+      set(ref(db, 'users/' + uid + "/task2Completed"), false)
+      .catch((error) => {
+          console.log(error.message)
+      });
+      set(ref(db, 'users/' + uid + "/task3Completed"), false)
+      .catch((error) => {
+          console.log(error.message)
+      });
     },
+    
     acceptChallenge: function () {
       this.closeWindow()
       // set current task
       this.currentTask = this.clickedTask;
+      set(ref(db, 'users/' + uid + "/currentTaskID"), this.currentTask)
+      .catch((error) => {
+          console.log(error.message)
+      });
       // clear
       this.clickedTask = null;
       // Add new map for the functionality of user accepting the challenge
@@ -219,14 +256,19 @@ window.resultView = new Vue({
     },
 
     cancelTask: function () {
+      this.closeWindow()
       // display motivational speech
       determination.play();
       typeWriter("You cannot give up just yet...", 0, "game-over");
-      setTimeout(() => typeWriter(this.username.toUpperCase().concat("!"), 0, "game-over"), 7000);
+      setTimeout(() => typeWriter(this.currentUserArray['name'].toUpperCase().concat("!"), 0, "game-over"), 7000);
       setTimeout(() => typeWriter("Stay Determined!!!", 0, "game-over"), 14000);
       // reset internal data
       this.closeWindow();
       this.currentTask = null;
+      set(ref(db, 'users/' + uid + "/currentTaskID"), -1)
+      .catch((error) => {
+          console.log(error.message)
+      });
     },
 
     searchMap: function (index) {
@@ -273,13 +315,6 @@ window.resultView = new Vue({
     },
 
     showUser: function (whichMap) {
-      // user image
-      // this.userImage = {
-      //   url: "a-better-tomorrow.jpg", // url TODO: CHANGE THIS
-      //   scaledSize: new google.maps.Size(30, 30), // scaled size
-      //   //origin: new google.maps.Point(0,0), // origin
-      //   //anchor: new google.maps.Point(0, 0) // anchor
-      // };
       // track user position
       // check if geolocation is supported
       if (navigator.geolocation) {
@@ -316,7 +351,7 @@ window.resultView = new Vue({
           map: whichMap,
           position: user_pos,
           title: "You",
-          //icon: this.userImage TODO
+          icon: this.userImage
         });
         // refocus map, but only for first time getting user position
         // use setTimeout to guarantee Bootstrap to change the visibility of map first
@@ -345,14 +380,51 @@ window.resultView = new Vue({
       this.closeWindow();
       if (this.currentTask === this.task1) {
         this.taskCompleted[0] = true;
+        set(ref(db, 'users/' + uid + "/task1Completed"), true)
+        .catch((error) => {
+          console.log(error.message)
+        });
       }
       else if (this.currentTask === this.task2) {
         this.taskCompleted[1] = true;
+        set(ref(db, 'users/' + uid + "/task2Completed"), true)
+        .catch((error) => {
+          console.log(error.message)
+        });
       }
       else {
         this.taskCompleted[2] = true;
+        set(ref(db, 'users/' + uid + "/task3Completed"), true)
+        .catch((error) => {
+          console.log(error.message)
+        });
       }
+      // get points
+      const points = this.currentUserArray['points'] + this.allTasks[this.currentTask].points;
+      if (points % 100 < this.allTasks[this.currentTask].points)
+      {
+        this.currentUserArray['level'] += 1;
+        set(ref(db, 'users/' + uid + "/level"), this.currentUserArray['level'])
+        .catch((error) => {
+          console.log(error.message)
+        });
+         set(ref(db, 'users/' + uid + "/badge"), this.currentUserArray['level'] + ".png")
+          .catch((error) => {
+          console.log(error.message)
+        });
+      }
+      // reset current task
       this.currentTask = null;
+      // reset current task on db
+      set(ref(db, 'users/' + uid + "/currentTaskID"), -1)
+      .catch((error) => {
+          console.log(error.message)
+      });
+      // update user's points on db
+      set(ref(db, 'users/' + uid + "/points"), points)
+      .catch((error) => {
+          console.log(error.message)
+      });      
     },
 
     showActivity: function (whichMap) {
@@ -465,10 +537,74 @@ window.resultView = new Vue({
           break;
       }
     },
+    getValues: function() {
+
+      // const dbRef = ref(getDatabase());
+      // get(child(dbRef, `users/${userId}`)).then((snapshot) => {
+      //   if (snapshot.exists()) {
+      //     console.log(snapshot.val());
+      //   } else {
+      //     console.log("No data available");
+      //   }
+      // })
+      const userdb = ref(getDatabase());
+      this.midnightTime = new Date(new Date().setHours(0,0,0,0)).toString();
+      get(child(userdb, 'users')).then((snapshot) => {
+        var data = snapshot.val();
+        this.currentUserArray = data[uid];
+        console.log(this.currentUserArray);
+        this.checkTimestamp();
+      })
+    },
+    //return true if timestamp needs a reset
+    checkTimestamp: function(){
+      // the first time user logs in
+      if (this.currentUserArray['timestampLastMidnight'] == -1)
+      {
+        set(ref(db, 'users/' + uid + "/timestampLastMidnight"), this.midnightTime)
+        .catch((error) => {
+            console.log(error.message)
+        });
+        this.getTasks();
+      }
+      // when the user logs in on a new day
+      else if (this.currentUserArray['timestampLastMidnight'] !== this.midnightTime) {
+        // set the timestampLastMidnight to current midnightTime
+        set(ref(db, 'users/' + uid + "/timestampLastMidnight"), this.midnightTime)
+        .catch((error) => {
+            console.log(error.message)
+        });
+        // get new tasks for the user
+        this.getTasks();
+      }
+      // when the user logs in on the same day
+      else {
+        console.log(this.currentUserArray['timestampLastMidnight'])
+        this.task1 = this.currentUserArray['task1'];
+        this.task2 = this.currentUserArray['task2'];
+        this.task3 = this.currentUserArray['task3'];
+        this.taskCompleted[0] = this.currentUserArray['task1Completed'];
+        this.taskCompleted[1] = this.currentUserArray['task2Completed'];
+        this.taskCompleted[2] = this.currentUserArray['task3Completed'];
+        // user image
+        this.userImage = {
+          url: "../images/profile_animals/" + this.currentUserArray['image'], // url TODO: CHANGE THIS
+          scaledSize: new google.maps.Size(30, 30), // scaled size
+          //origin: new google.maps.Point(0,0), // origin
+          //anchor: new google.maps.Point(0, 0) // anchor
+        };
+        if (this.currentUserArray['currentTaskID'] != -1)
+        {
+          this.currentTask = this.currentUserArray['currentTaskID'];
+          this.placeId = this.allTasks[this.currentTask].location;
+          this.showActivity(this.currentTaskMap);
+        }
+      }
+      this.hasFetched = true;
+    }
   },
   mounted() {
-    // generate tasks
-    this.getTasks();
+    this.getValues();
     // shuffle the texts
     // start the text animation
     StartTextAnimation(0, "motivation");
