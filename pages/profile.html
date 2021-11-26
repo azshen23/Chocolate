@@ -39,6 +39,12 @@ body {
     margin-bottom: 30px;
 }
 
+#loading-img {
+    position: relative;
+    width: 20%;
+    height: 20%;
+}
+
 .zoom:hover {
         -webkit-transform: scale(1.5);
         /* Safari 3-8 */
@@ -61,10 +67,11 @@ body {
 [v-cloak] {
         display: none;
 }
+
 </style>
 <body>
     <div id="profile" v-cloak>
-    <nav class="navbar navbar-light bg-light" id="universalHeader">
+    <nav class="navbar navbar-light bg-light" style="background-color: #BBBFBB!important;" id="universalHeader">
         <div class="navbar-brand">
             <a href="activity.html">
                 <img img class="activityIcon zoom" src="../images/home.png" alt="activityIcon">
@@ -82,20 +89,26 @@ body {
             </a>
         </div>
     </nav>
-    <div>
+    <!-- <div id="basic_info">
+        <h1></h3>
+    </div> -->
+    <h style ="font-size: 50px">
+        {{ currentUserArray && currentUserArray.name }}
+    </h>
+
+    <div v-show="!currentUserArray">
+        <img id="loading-img" src="../images/loading.gif" alt="loading..."/>
+    </div>
+    <div v-show="currentUserArray">
         <!-- profile picture -->
         <img id="profile_img" v-bind:src="imageUrl"/>
         
         <div v-show="!picture_choose_clicked">
-            <h4 style="display: inline;">I want to change profile picture: </h4>
+            <h4 style="display: inline;">Edit profile picture: </h4>
             <button type="button" class="btn btn-outline-success" v-on:click="change_button_clicked">Change Picture</button>
         </div>
-        <div v-show="picture_choose_clicked">                       
+        <div class = "border border-success" v-show="picture_choose_clicked">                       
             <img v-show="picture_choose_clicked" id="animal" v-for="picture in animals" v-bind:src="'../images/profile_animals/'+picture+'.png'" v-on:click="picture_click(picture + '.png')"/>
-        </div>
-
-        <div id="basic_info">
-            <h1>{{ currentUserArray && currentUserArray.name }}</h3>
         </div>
 
         <div id="badge_info">
@@ -105,13 +118,13 @@ body {
             <h3>Level: {{ currentUserArray && currentUserArray.level}}</h3>
         </div>
         <div id="points">
-            <p>Points until next badge</p>
-            <div class="progress">
+            <p> {{ currentUserArray ? (100 - currentUserArray.points % 100) : '' }} points until next level</p>
+            <div class="progress border border-primary">
                 <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="currentUserArray && {'width': currentUserArray.points % 100 + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
                 <span>current earned: {{ currentUserArray ? (currentUserArray.points % 100) : '' }} / 100</span>
             </div>
         </div>
-        <button type="button" class="btn btn-outline-secondary signOut" v-on:click="signOut" style ="margin-top: 20px">Signout</button>
+        <button type="button" class="btn btn-outline-danger signOut" v-on:click="signOut" style ="margin-top: 20px">Signout</button>
     </div>
     </div>
 

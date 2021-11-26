@@ -41,9 +41,15 @@
         transform: scale(1.5);
     }
 
+    #loading-img {
+        position: relative;
+        width: 20%;
+        height: 20%;
+    }
+
     #pfpSrc{
-        height: 50px;
-        width: 50px;
+        height: 45px;
+        width: 45px;
     }
 
     #badgeSrc{
@@ -58,7 +64,7 @@
 
 <body>
     <div id="leaderboard" style ="text-align: center;" v-cloak>
-    <nav class="navbar navbar-light bg-light" id="universalHeader">
+    <nav class="navbar navbar-light bg-light" style="background-color: #BBBFBB!important;" id="universalHeader">
         <div class="navbar-brand">
             <a href="activity.html">
                 <img img class="activityIcon zoom" src="../images/home.png" alt="activityIcon">
@@ -79,8 +85,11 @@
     <h style ="font-size: 50px">
         Leaderboard
     </h>
+    <div v-show="!leaderboardArray">
+        <img id="loading-img" src="../images/loading.gif" alt="loading..."/>
+    </div>
     <div class = "align-items-center flex-column mt-3 d-flex leaderboard">  
-        <table class="table table-striped" style = "width: 60%;"> 
+        <table class="table table-striped border" style = "width: 60%;"> 
             <tbody>
                 <tr v-for="(result, index) in leaderboardArray">
                     <th scope="row">{{ index + 1 }}</th>
@@ -90,7 +99,7 @@
                     <td>Level: {{ result && result.level}} </td>
                     <td>{{ result && result.points }} points </td>
                 </tr>
-                <tr class="table-success">
+                <tr v-show="leaderboardArray" class="table-success">
                     <th scope="row">{{currentUserPosition + 1}}</th>
                     <td> <img id = "pfpSrc" v-bind:src = "currentUserPfpUrl"></td>
                     <td>{{ currentUserArray && currentUserArray.name }} (You)</td>
