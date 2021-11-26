@@ -32,7 +32,7 @@ onAuthStateChanged(auth, (user) => {
 
 // GTA San Andreas Mission Passed Theme
 // https://www.youtube.com/watch?v=7lsdJDiJ0QE
-var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
+//var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
 // Undertale Soundtrack - Determination
 // https://www.youtube.com/watch?v=h1wSPmlZV-w
 var determination = new Audio("../sound/Determination.mp3");
@@ -188,6 +188,7 @@ window.resultView = new Vue({
     // user data
     currentUserArray: null,
     midnightTime: null,
+    hasFetched: false,
   },
   methods: {
     getTasks: function () {
@@ -257,7 +258,7 @@ window.resultView = new Vue({
     cancelTask: function () {
       this.closeWindow()
       // display motivational speech
-      //determination.play();
+      determination.play();
       typeWriter("You cannot give up just yet...", 0, "game-over");
       setTimeout(() => typeWriter(this.currentUserArray['name'].toUpperCase().concat("!"), 0, "game-over"), 7000);
       setTimeout(() => typeWriter("Stay Determined!!!", 0, "game-over"), 14000);
@@ -599,6 +600,7 @@ window.resultView = new Vue({
           this.showActivity(this.currentTaskMap);
         }
       }
+      this.hasFetched = true;
     }
   },
   mounted() {
