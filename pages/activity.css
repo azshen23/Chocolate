@@ -1,3 +1,9 @@
+body {
+    /* background-image: url("../images/onepunchman.jpg"); */
+    background-color: #EAE8E3;
+   }
+
+
 .activityIcon {
     width: 80px;
     height: auto;
@@ -23,3 +29,4 @@
 .profileDiv {
     text-align: right;
 }
+
