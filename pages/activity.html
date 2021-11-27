@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="images/home.png">
     <title>Chocolate</title>
     <!-- Bootstrap v4.0 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -108,18 +109,18 @@
         <nav class="navbar navbar-light bg-primary" style="background-color: #BBBFBB!important;" id="universalHeader">
             <div class="navbar-brand">
                 <a href="activity.html">
-                    <img img class="activityIcon zoom" src="../images/home.png" alt="activityIcon">
+                    <img img class="activityIcon zoom" src="images/home.png" alt="activityIcon">
                 </a>
             </div>
             <div class="navbar-brand navbar-center">
                 <a href="leaderboard.html">
-                    <img class="leaderboardIcon zoom" src="../images/trophy.png"
+                    <img class="leaderboardIcon zoom" src="images/trophy.png"
                         alt="trophyIcon">
                 </a>
             </div>
             <div class="navbar-brand navbar-right">
                 <a href="profile.html">
-                    <img img class="profileIcon zoom" v-bind:src="userImage ? userImage.url : '../images/16363.png'" alt="profileIcon">
+                    <img img class="profileIcon zoom" v-bind:src="userImage ? userImage.url : 'images/16363.png'" alt="profileIcon">
                 </a>
             </div>
         </nav>
@@ -127,7 +128,7 @@
             <strong id="motivation"></strong>
         </div>
         <div v-show="!currentUserArray" class="text-center">
-            <img id="loading-img" src="../images/loading.gif" alt="loading..."/>
+            <img id="loading-img" src="images/loading.gif" alt="loading..."/>
         </div>
         <div v-show="currentUserArray" class="flx text-center">
             <h1 v-show="!taskCompleted[0] || !taskCompleted[1] || !taskCompleted[2]">
@@ -216,7 +217,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <h2 class="modal-title text-center" id="exampleModalLabel">
-                            <img class="mis-com" src="../images/mission_complete.png" />
+                            <img class="mis-com" src="images/mission_complete.png" />
                         </h2>
                     </div>
                 </div>

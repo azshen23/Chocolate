@@ -587,7 +587,7 @@ window.resultView = new Vue({
         this.taskCompleted[2] = this.currentUserArray['task3Completed'];
         // user image
         this.userImage = {
-          url: "../images/profile_animals/" + this.currentUserArray['image'], // url TODO: CHANGE THIS
+          url: "images/profile_animals/" + this.currentUserArray['image'], // url TODO: CHANGE THIS
           scaledSize: new google.maps.Size(30, 30), // scaled size
           //origin: new google.maps.Point(0,0), // origin
           //anchor: new google.maps.Point(0, 0) // anchor

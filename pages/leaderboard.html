@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Chocolate</title>
+    <link rel="icon" href="images/home.png">
     <!-- Bootstrap v4.0 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -67,18 +68,18 @@
     <nav class="navbar navbar-light bg-light" style="background-color: #BBBFBB!important;" id="universalHeader">
         <div class="navbar-brand">
             <a href="activity.html">
-                <img img class="activityIcon zoom" src="../images/home.png" alt="activityIcon">
+                <img img class="activityIcon zoom" src="images/home.png" alt="activityIcon">
             </a>
         </div>
         <div class="navbar-brand navbar-center">
             <a href="leaderboard.html">
-                <img class="leaderboardIcon zoom" src="../images/trophy.png"
+                <img class="leaderboardIcon zoom" src="images/trophy.png"
                     alt="trophyIcon">
             </a>
         </div>
         <div class="navbar-brand navbar-right">
             <a href="profile.html">
-                <img img class="profileIcon zoom" v-bind:src="currentUserPfpUrl || '../images/16363.png'" alt="profileIcon">
+                <img img class="profileIcon zoom" v-bind:src="currentUserPfpUrl || 'images/16363.png'" alt="profileIcon">
             </a>
         </div>
     </nav>
@@ -86,7 +87,7 @@
         Leaderboard
     </h>
     <div v-show="!leaderboardArray">
-        <img id="loading-img" src="../images/loading.gif" alt="loading..."/>
+        <img id="loading-img" src="images/loading.gif" alt="loading..."/>
     </div>
     <div class = "align-items-center flex-column mt-3 d-flex leaderboard">  
         <table class="table table-striped border" style = "width: 60%;"> 

@@ -69,14 +69,14 @@ var resultView = new Vue({
         },
         //get image url from databse
         getImageUrl: function(i){
-          this.leaderboardArray[i]['badge'] = "../images/badges/" + this.leaderboardArray[i]['badge']
-          this.leaderboardArray[i]['image'] = "../images/profile_animals/" +  this.leaderboardArray[i]['image']
+          this.leaderboardArray[i]['badge'] = "images/badges/" + this.leaderboardArray[i]['badge']
+          this.leaderboardArray[i]['image'] = "images/profile_animals/" +  this.leaderboardArray[i]['image']
         },
         //get currentUser image urls
         getCurrentUserImageUrl: function(){
 
-          this.currentUserBadgeUrl = "../images/badges/" + this.currentUserArray['badge']
-          this.currentUserPfpUrl = "../images/profile_animals/" + this.currentUserArray['image']
+          this.currentUserBadgeUrl = "images/badges/" + this.currentUserArray['badge']
+          this.currentUserPfpUrl = "images/profile_animals/" + this.currentUserArray['image']
         }
     },
     beforeMount(){

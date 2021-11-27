@@ -55,7 +55,7 @@ var resultView = new Vue({
         .catch((error) => {
             console.log(error.message)
         });
-        this.imageUrl = "../images/profile_animals/" + picture
+        this.imageUrl = "images/profile_animals/" + picture
         /* const storage = getStorage(app);
         var image = ref1(storage, '/profilepictures/' + picture);
         getDownloadURL(image).then((url) =>{
@@ -65,7 +65,7 @@ var resultView = new Vue({
 
       },
       getBadgeUrl: function(badge){
-        this.badgeUrl = "../images/badges/" + badge
+        this.badgeUrl = "images/badges/" + badge
       },
       getValues: function(){
         var db = ref(getDatabase(), 'users');
@@ -84,7 +84,7 @@ var resultView = new Vue({
       },
       setPfp: function(picture)
       {
-        this.imageUrl = "../images/profile_animals/" + picture
+        this.imageUrl = "images/profile_animals/" + picture
       } 
     },
     beforeMount(){

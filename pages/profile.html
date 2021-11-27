@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="images/home.png">
     <title>Chocolate</title>
     <!-- Bootstrap v4.0 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -74,18 +75,18 @@ body {
     <nav class="navbar navbar-light bg-light" style="background-color: #BBBFBB!important;" id="universalHeader">
         <div class="navbar-brand">
             <a href="activity.html">
-                <img img class="activityIcon zoom" src="../images/home.png" alt="activityIcon">
+                <img img class="activityIcon zoom" src="images/home.png" alt="activityIcon">
             </a>
         </div>
         <div class="navbar-brand navbar-center">
             <a href="leaderboard.html">
-                <img class="leaderboardIcon zoom" src="../images/trophy.png"
+                <img class="leaderboardIcon zoom" src="images/trophy.png"
                     alt="trophyIcon">
             </a>
         </div>
         <div class="navbar-brand navbar-right">
             <a href="profile.html">
-                <img img class="profileIcon zoom" v-bind:src="imageUrl || '../images/16363.png'" alt="profileIcon">
+                <img img class="profileIcon zoom" v-bind:src="imageUrl || 'images/16363.png'" alt="profileIcon">
             </a>
         </div>
     </nav>
@@ -97,7 +98,7 @@ body {
     </h>
 
     <div v-show="!currentUserArray">
-        <img id="loading-img" src="../images/loading.gif" alt="loading..."/>
+        <img id="loading-img" src="images/loading.gif" alt="loading..."/>
     </div>
     <div v-show="currentUserArray">
         <!-- profile picture -->
@@ -108,7 +109,7 @@ body {
             <button type="button" class="btn btn-outline-success" v-on:click="change_button_clicked">Change Picture</button>
         </div>
         <div class = "border border-success" v-show="picture_choose_clicked">                       
-            <img v-show="picture_choose_clicked" id="animal" v-for="picture in animals" v-bind:src="'../images/profile_animals/'+picture+'.png'" v-on:click="picture_click(picture + '.png')"/>
+            <img v-show="picture_choose_clicked" id="animal" v-for="picture in animals" v-bind:src="'images/profile_animals/'+picture+'.png'" v-on:click="picture_click(picture + '.png')"/>
         </div>
 
         <div id="badge_info">
