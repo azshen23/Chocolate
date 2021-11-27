@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1024">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="images/home.png">
     <title>Chocolate</title>
@@ -168,7 +168,7 @@
             </div>
             <div v-show="currentTask !== null" style="margin-bottom: 0px;">
                 <div v-bind:class="(currentTask !== null ? 'btn btn-outline-success' : '')" type="button"
-                    data-toggle="modal" data-target="#self-complete">
+                    v-on:click="checkTimeComplete" data-toggle="modal" data-target="#self-complete">
                     I Completed the Mission
                 </div>
                 <div v-bind:class="(currentTask !== null ? 'btn btn btn-outline-danger' : '')" type="button"
@@ -228,7 +228,12 @@
             data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div class="modal-body text-center">
+                    <div v-show="!timePassed" class="modal-body text-center"> 
+                        <p> Our location shows that you haven't completed the mission yet. </p>
+                        <p> Come back in {{ minutesLeft }}:{{ secondsLeft }} minutes </p>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button>
+                    </div>
+                    <div v-show="timePassed" class="modal-body text-center">
                         <p>
                             I pinky swear that I have truly completed the mission. It's just that my browser's location tracking is not working.
                         </p>

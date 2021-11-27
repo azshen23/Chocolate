@@ -188,6 +188,10 @@ window.resultView = new Vue({
     // user data
     currentUserArray: null,
     midnightTime: null,
+    timePassed: false,
+    minutesLeft: null,
+    secondsLeft: null,
+    timestampTaskStart: null,
   },
   methods: {
     getTasks: function () {
@@ -248,6 +252,13 @@ window.resultView = new Vue({
       .catch((error) => {
           console.log(error.message)
       });
+
+      this.timestampTaskStart = Date.now()
+      set(ref(db, 'users/' + uid + "/timestampTaskStart"), this.timestampTaskStart)
+      .catch((error) => {
+          console.log(error.message)
+      });
+
       // clear
       this.clickedTask = null;
       // Add new map for the functionality of user accepting the challenge
@@ -255,7 +266,8 @@ window.resultView = new Vue({
     },
 
     cancelTask: function () {
-      this.closeWindow()
+      this.closeWindow();
+      this.timePassed = false;
       // display motivational speech
       //determination.play();
       typeWriter("You cannot give up just yet...", 0, "game-over");
@@ -369,10 +381,21 @@ window.resultView = new Vue({
       // store distance in MILES
       this.distance = dist / 1609;
     },
-
+    checkTimeComplete: function(){
+      // check for <= 30 minutes
+      const currentTime = Date.now();
+      if (currentTime > this.timestampTaskStart + 1800000)
+      {
+        this.timePassed = true;
+      }
+      else{
+        this.minutesLeft = Math.floor((1800000 - (currentTime - this.timestampTaskStart)) / 60000);
+        this.secondsLeft = (((1800000 - (currentTime - this.timestampTaskStart)) % 60000) / 1000).toFixed(0)
+      }
+    },
     completeActivity: function () {
       // play music
-      //mission_passed_sound.play();
+      //mission_passed_sound.play()
       // display modal
       document.getElementById("mis-com-button").click();
       // reset internal data
@@ -423,7 +446,8 @@ window.resultView = new Vue({
       set(ref(db, 'users/' + uid + "/points"), points)
       .catch((error) => {
           console.log(error.message)
-      });      
+      });     
+      this.timePassed = false;
     },
 
     showActivity: function (whichMap) {
@@ -585,13 +609,6 @@ window.resultView = new Vue({
         this.taskCompleted[0] = this.currentUserArray['task1Completed'];
         this.taskCompleted[1] = this.currentUserArray['task2Completed'];
         this.taskCompleted[2] = this.currentUserArray['task3Completed'];
-        // user image
-        this.userImage = {
-          url: "images/profile_animals/" + this.currentUserArray['image'], // url TODO: CHANGE THIS
-          scaledSize: new google.maps.Size(30, 30), // scaled size
-          //origin: new google.maps.Point(0,0), // origin
-          //anchor: new google.maps.Point(0, 0) // anchor
-        };
         if (this.currentUserArray['currentTaskID'] != -1)
         {
           this.currentTask = this.currentUserArray['currentTaskID'];
@@ -599,6 +616,14 @@ window.resultView = new Vue({
           this.showActivity(this.currentTaskMap);
         }
       }
+      // user image
+      this.userImage = {
+        url: "images/profile_animals/" + this.currentUserArray['image'], // url TODO: CHANGE THIS
+        scaledSize: new google.maps.Size(30, 30), // scaled size
+        //origin: new google.maps.Point(0,0), // origin
+        //anchor: new google.maps.Point(0, 0) // anchor
+      };
+      this.timestampTaskStart = this.currentUserArray['timestampTaskStart']
     }
   },
   mounted() {
