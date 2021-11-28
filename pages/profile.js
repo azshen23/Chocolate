@@ -49,6 +49,9 @@ var resultView = new Vue({
           const errorMessage = error.message;
         });
       },
+      noneClicked: function() {
+        this.picture_choose_clicked = false;
+      },
       picture_click: function(picture) {
         const db = getDatabase();
         set(ref(db, 'users/' + uid + "/image"), picture)

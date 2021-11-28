@@ -108,8 +108,9 @@ body {
             <h4 style="display: inline;">Edit profile picture: </h4>
             <button type="button" class="btn btn-outline-success" v-on:click="change_button_clicked">Change Picture</button>
         </div>
-        <div class = "border border-success" v-show="picture_choose_clicked">                       
+        <div class = "border border-success" v-show="picture_choose_clicked" style="width: 80%; height: 400px;">                       
             <img v-show="picture_choose_clicked" id="animal" v-for="picture in animals" v-bind:src="'images/profile_animals/'+picture+'.png'" v-on:click="picture_click(picture + '.png')"/>
+            <button type="button" class="btn btn-outline-warning" v-on:click="noneClicked">Close</button>
         </div>
 
         <div id="badge_info">
@@ -121,7 +122,7 @@ body {
         <div id="points">
             <p> {{ currentUserArray ? (100 - currentUserArray.points % 100) : '' }} points until next level</p>
             <div class="progress border border-primary">
-                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar"  v-bind:style="currentUserArray && {'width': currentUserArray.points % 100 + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" style="height: 25px;" v-bind:style="currentUserArray && {'width': currentUserArray.points % 100 + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
                 <span>current earned: {{ currentUserArray ? (currentUserArray.points % 100) : '' }} / 100</span>
             </div>
         </div>
