@@ -27,7 +27,7 @@ const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
-    location.href = 'activity.html'
+    location.href = 'activity.html';
   } 
 });
 
@@ -40,12 +40,22 @@ var resultView = new Vue({
     methods: {
         signin: function(){
           signInWithEmailAndPassword(auth, this.email, this.password)
-            console.log(this.email)
-            console.log(this.password)
             .catch((error) => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              console.log(errorMessage + " " + errorCode)
+              //alert("The email entered is not valid or already exists")
+              let errorCode = error.code;
+              if (errorCode == "auth/wrong-password")
+              { 
+                alert("The password entered is incorrect uwu >.<");
+              }
+              else if (errorCode = "auth/invalid-email")
+              {
+                alert("This email does not exist. Pleae enter a valid email uwu >.<");
+              }
+              else
+              {
+                alert("Oops, something went wrong uwu >.<. Please try again.");
+              }
+              console.log(errorCode)
             });
         }
     }

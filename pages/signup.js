@@ -58,9 +58,22 @@ var resultView = new Vue({
                 })
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage + " " + errorCode)
+                let errorCode = error.code;
+                if (this.password.length >= 6){
+                    if (errorCode = "auth/invalid-email")
+                    {
+                        alert("This email is invalid. Pleae enter another email uwu *>.<*");
+                    }
+                    else
+                    {
+                        alert("Oops, something went wrong uwu >.<. Please try again.");
+                    }
+                }
+                else{
+                    alert("Please enter a valid password (>= 6 characters) uwu >.<");
+                }
+                
+                console.log(errorCode)
             });
 
         }

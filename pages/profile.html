@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1024">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="images/home.png">
     <title>Chocolate</title>
@@ -120,7 +120,7 @@ body {
             <h3>Level: {{ currentUserArray && currentUserArray.level}}</h3>
         </div>
         <div id="points">
-            <p> {{ currentUserArray ? (100 - currentUserArray.points % 100) : '' }} points until next level</p>
+            <h5> {{ currentUserArray ? (100 - currentUserArray.points % 100) : '' }} points until next level</h5>
             <div class="progress border border-primary">
                 <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" style="height: 25px;" v-bind:style="currentUserArray && {'width': currentUserArray.points % 100 + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
                 <span>current earned: {{ currentUserArray ? (currentUserArray.points % 100) : '' }} / 100</span>
