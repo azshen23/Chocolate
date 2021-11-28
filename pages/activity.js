@@ -540,8 +540,13 @@ window.resultView = new Vue({
         case error.PERMISSION_DENIED:
           console.log(this.watchId);
           this.locationOn = false;
-          alert("Error: The permission for location is denied.\n"
-            + "For full functionality, please turn on location.");
+          const alerted = localStorage.getItem('alerted') || '';
+          if (alerted != 'yes') {
+            alert("Error: The permission for location is denied.\n"
+            + "For full functionality, please turn on location.\n"
+            + "Remark: If you are using Firefox and have accepted location request, please ignore this message.");
+            localStorage.setItem('alerted','yes');
+          }
           break;
         case error.POSITION_UNAVAILABLE:
           console.log("Error: Location information is unavailable.");
@@ -561,15 +566,11 @@ window.resultView = new Vue({
       }
     },
     getValues: function() {
-
-      // const dbRef = ref(getDatabase());
-      // get(child(dbRef, `users/${userId}`)).then((snapshot) => {
-      //   if (snapshot.exists()) {
-      //     console.log(snapshot.val());
-      //   } else {
-      //     console.log("No data available");
-      //   }
-      // })
+      // reset alert
+      if (localStorage.getItem("alerted")) {
+        localStorage.alerted = "no";
+      }
+      // fetch user from db
       const userdb = ref(getDatabase());
       this.midnightTime = new Date(new Date().setHours(0,0,0,0)).toString();
       get(child(userdb, 'users')).then((snapshot) => {
