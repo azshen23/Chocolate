@@ -602,18 +602,6 @@ window.resultView = new Vue({
         .catch((error) => {
             console.log(error.message)
         });
-        set(ref(db, 'users/' + uid + "/task1Completed"), false)
-        .catch((error) => {
-            console.log(error.message)
-        });
-        set(ref(db, 'users/' + uid + "/task2Completed"), false)
-        .catch((error) => {
-            console.log(error.message)
-        });
-        set(ref(db, 'users/' + uid + "/task3Completed"), false)
-        .catch((error) => {
-            console.log(error.message)
-        });
         // get new tasks for the user
         this.getTasks();
       }
