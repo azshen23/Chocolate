@@ -598,12 +598,27 @@ window.resultView = new Vue({
         .catch((error) => {
             console.log(error.message)
         });
+        set(ref(db, 'users/' + uid + "/currentTaskID"), -1)
+        .catch((error) => {
+            console.log(error.message)
+        });
+        set(ref(db, 'users/' + uid + "/task1Completed"), false)
+        .catch((error) => {
+            console.log(error.message)
+        });
+        set(ref(db, 'users/' + uid + "/task2Completed"), false)
+        .catch((error) => {
+            console.log(error.message)
+        });
+        set(ref(db, 'users/' + uid + "/task3Completed"), false)
+        .catch((error) => {
+            console.log(error.message)
+        });
         // get new tasks for the user
         this.getTasks();
       }
       // when the user logs in on the same day
       else {
-        console.log(this.currentUserArray['timestampLastMidnight'])
         this.task1 = this.currentUserArray['task1'];
         this.task2 = this.currentUserArray['task2'];
         this.task3 = this.currentUserArray['task3'];
