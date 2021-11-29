@@ -28,6 +28,7 @@
     body {
         font-family: "OCR A Std", monospace;
     }
+
     #map {
         height: 400px;
         width: 100%;
@@ -71,6 +72,7 @@
         box-shadow: 6px 6px 4px 1px #ccc;
         background-color: #CCDBEB;
     }
+
     .flx h1 {
         margin-top: 4%;
         margin-bottom: 3%;
@@ -81,9 +83,11 @@
         border-color: #00274C;
         color: #00274C;
     }
+
     .btn-outline-primary:hover {
         background-color: #00274C;
     }
+
     .btn-outline-primary:focus {
         box-shadow: none;
     }
@@ -114,21 +118,21 @@
             </div>
             <div class="navbar-brand navbar-center">
                 <a href="leaderboard.html">
-                    <img class="leaderboardIcon zoom" src="images/trophy.png"
-                        alt="trophyIcon">
+                    <img class="leaderboardIcon zoom" src="images/trophy.png" alt="trophyIcon">
                 </a>
             </div>
             <div class="navbar-brand navbar-right">
                 <a href="profile.html">
-                    <img img class="profileIcon zoom" v-bind:src="userImage ? userImage.url : 'images/16363.png'" alt="profileIcon">
+                    <img img class="profileIcon zoom" v-bind:src="userImage ? userImage.url : 'images/16363.png'"
+                        alt="profileIcon">
                 </a>
             </div>
         </nav>
-        <div class="text-center"> 
+        <div class="text-center">
             <strong id="motivation"></strong>
         </div>
         <div v-show="!currentUserArray" class="text-center">
-            <img id="loading-img" src="images/loading.gif" alt="loading..."/>
+            <img id="loading-img" src="images/loading.gif" alt="loading..." />
         </div>
         <div v-show="currentUserArray" class="flx text-center">
             <h1 v-show="!taskCompleted[0] || !taskCompleted[1] || !taskCompleted[2]">
@@ -137,34 +141,35 @@
             <h1 style="margin-bottom: 5px;" v-show="taskCompleted[0] && taskCompleted[1] && taskCompleted[2]">
                 You've completed everything!
             </h1>
-            <h1 style="margin-top: 0px; margin-bottom: 4%;" v-show="taskCompleted[0] && taskCompleted[1] && taskCompleted[2]">
+            <h1 style="margin-top: 0px; margin-bottom: 4%;"
+                v-show="taskCompleted[0] && taskCompleted[1] && taskCompleted[2]">
                 Come back tomorrow for more!
             </h1>
             <div class="btn-group-vertical">
-            <div type="button" v-bind:class="(currentTask === null ? 'btn btn-outline-primary btn-lg' : 'btn-lg')"
-                v-show="(!taskCompleted[0] && (currentTask === null || task1 === currentTask))"
-                v-on:click="searchMap(task1)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
-                v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
-                {{allTasks[task1]['description']}}</div>
-            <div class="btn-lg" v-show="taskCompleted[0] && (currentTask === null)">
-                &#10004; <s>{{allTasks[task1]['description']}}</s>
-            </div>
-            <div type="button" v-bind:class="(currentTask === null ? 'btn btn-outline-primary btn-lg' : 'btn-lg')"
-                v-show="(!taskCompleted[1] && (currentTask === null || task2 === currentTask))"
-                v-on:click="searchMap(task2)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
-                v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
-                {{allTasks[task2]['description']}}</div>
-            <div class="btn-lg" v-show="taskCompleted[1] && (currentTask === null)">
-                &#10004; <s>{{allTasks[task2]['description']}}</s>
-            </div>
-            <div class="btn-lg" v-show="taskCompleted[2] && (currentTask === null)">
-                &#10004; <s>{{allTasks[task3]['description']}}</s>
-            </div>
-            <div type="button" v-bind:class="(currentTask === null ? 'btn btn-outline-primary btn-lg' : 'btn-lg')"
-                v-show="(!taskCompleted[2] && (currentTask === null || task3 === currentTask))"
-                v-on:click="searchMap(task3)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
-                v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
-                {{allTasks[task3]['description'] || ''}}</div>
+                <div type="button" v-bind:class="(currentTask === null ? 'btn btn-outline-primary btn-lg' : 'btn-lg')"
+                    v-show="(!taskCompleted[0] && (currentTask === null || task1 === currentTask))"
+                    v-on:click="searchMap(task1)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
+                    v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
+                    {{allTasks[task1]['description']}}</div>
+                <div class="btn-lg" v-show="taskCompleted[0] && (currentTask === null)">
+                    &#10004; <s>{{allTasks[task1]['description']}}</s>
+                </div>
+                <div type="button" v-bind:class="(currentTask === null ? 'btn btn-outline-primary btn-lg' : 'btn-lg')"
+                    v-show="(!taskCompleted[1] && (currentTask === null || task2 === currentTask))"
+                    v-on:click="searchMap(task2)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
+                    v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
+                    {{allTasks[task2]['description']}}</div>
+                <div class="btn-lg" v-show="taskCompleted[1] && (currentTask === null)">
+                    &#10004; <s>{{allTasks[task2]['description']}}</s>
+                </div>
+                <div class="btn-lg" v-show="taskCompleted[2] && (currentTask === null)">
+                    &#10004; <s>{{allTasks[task3]['description']}}</s>
+                </div>
+                <div type="button" v-bind:class="(currentTask === null ? 'btn btn-outline-primary btn-lg' : 'btn-lg')"
+                    v-show="(!taskCompleted[2] && (currentTask === null || task3 === currentTask))"
+                    v-on:click="searchMap(task3)" v-bind:data-toggle="(currentTask === null ? 'modal' : '')"
+                    v-bind:data-target="(currentTask === null ? '#exampleModalLong' : '')">
+                    {{allTasks[task3]['description'] || ''}}</div>
             </div>
             <div v-show="currentTask !== null" style="margin-bottom: 0px;">
                 <div v-bind:class="(currentTask !== null ? 'btn btn-outline-success' : '')" type="button"
@@ -197,9 +202,10 @@
                                 v-on:click="closeWindow"> Deny </button>
                             <div id="map" ref="map"></div>
                         </div>
-                        <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: smaller;">                              
+                        <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: smaller;">
                             <p style="margin-bottom: 0;">
-                                Remark: Your location on the map might not be precise. If that's the case, please try either:
+                                Remark: Your location on the map might not be precise. If that's the case, please try
+                                either:
                             </p>
                             <ol style="margin: 0;">
                                 <li> Switch a browser. </li>
@@ -207,7 +213,8 @@
                             </ol>
                             <p style="margin: 0;">
                                 For more info, please check the official
-                                <a href="https://developers.google.com/maps/documentation/javascript/geolocation" target="_blank">
+                                <a href="https://developers.google.com/maps/documentation/javascript/geolocation"
+                                    target="_blank">
                                     Google Maps Geolocation Documentation.
                                 </a>
                             </p>
@@ -242,42 +249,48 @@
             </div>
         </div>
         <!-- Modal For Self-Completing the Mission -->
-        <div class="modal fade" id="self-complete" tabindex="-1" role="dialog" aria-labelledby="self-complete-mission" aria-hidden="true"
-            data-keyboard="false" data-backdrop="static">
+        <div class="modal fade" id="self-complete" tabindex="-1" role="dialog" aria-labelledby="self-complete-mission"
+            aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <div v-show="!timePassed" class="modal-body text-center"> 
+                    <div v-show="!timePassed" class="modal-body text-center">
                         <p> Our location shows that you haven't completed the mission yet. </p>
-                        <p> Come back in {{ minutesLeft }}:{{ secondsLeft }} minutes (time gate is lowered to 2 minutes for demonstration purposes, 30 minutes usually)</p>
+                        <p> Come back in {{ minutesLeft }}:{{ secondsLeft }} minutes (time gate is lowered to 2 minutes
+                            for demonstration purposes, 30 minutes usually)</p>
+                        <p> Mission will autocomplete upon arrival at mission location</p>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button>
                     </div>
                     <div v-show="timePassed" class="modal-body text-center">
                         <p>
-                            I pinky swear that I have truly completed the mission. It's just that my browser's location tracking is not working.
+                            I pinky swear that I have truly completed the mission. It's just that my browser's location
+                            tracking is not working.
                         </p>
-                        <button type="button" class="btn btn-primary"  data-dismiss="modal" v-on:click="completeActivity">I Pinky Swear</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            v-on:click="completeActivity">I Pinky Swear</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Nope</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Modal For Cancelling the Mission -->
-        <div class="modal fade" id="cancel-mission" tabindex="-1" role="dialog" aria-labelledby="cancel-mission" aria-hidden="true"
-            data-keyboard="false" data-backdrop="static">
+        <div class="modal fade" id="cancel-mission" tabindex="-1" role="dialog" aria-labelledby="cancel-mission"
+            aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body text-center">
                         <p>
                             Are you sure you want cancel the mission?
                         </p>
-                        <button type="button" class="btn btn-primary" v-on:click="cancelTask" data-dismiss="modal" data-toggle="modal" data-target="#mission-cancelled"> Yeah</button>
+                        <button type="button" class="btn btn-primary" v-on:click="cancelTask" data-dismiss="modal"
+                            data-toggle="modal" data-target="#mission-cancelled"> Yeah</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No! I will not!</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Modal to Dispay When Mission is Cancelled -->
-        <div class="modal fade" id="mission-cancelled" tabindex="-1" role="dialog" aria-labelledby="mission-cancelled" aria-hidden="true">
+        <div class="modal fade" id="mission-cancelled" tabindex="-1" role="dialog" aria-labelledby="mission-cancelled"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
