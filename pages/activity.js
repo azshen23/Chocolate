@@ -384,13 +384,13 @@ window.resultView = new Vue({
     checkTimeComplete: function(){
       // check for <= 30 minutes
       const currentTime = Date.now();
-      if (currentTime > this.timestampTaskStart + 1800000)
+      if (currentTime > this.timestampTaskStart + 120000)
       {
         this.timePassed = true;
       }
       else{
-        this.minutesLeft = Math.floor((1800000 - (currentTime - this.timestampTaskStart)) / 60000);
-        this.secondsLeft = (((1800000 - (currentTime - this.timestampTaskStart)) % 60000) / 1000).toFixed(0)
+        this.minutesLeft = Math.floor((120000 - (currentTime - this.timestampTaskStart)) / 60000);
+        this.secondsLeft = (((120000 - (currentTime - this.timestampTaskStart)) % 60000) / 1000).toFixed(0)
       }
     },
     completeActivity: function () {
