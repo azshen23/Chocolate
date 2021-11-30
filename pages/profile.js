@@ -59,11 +59,6 @@ var resultView = new Vue({
             console.log(error.message)
         });
         this.imageUrl = "images/profile_animals/" + picture
-        /* const storage = getStorage(app);
-        var image = ref1(storage, '/profilepictures/' + picture);
-        getDownloadURL(image).then((url) =>{
-          this.imageUrl = url
-        }); */
         this.picture_choose_clicked = false;
 
       },
