@@ -21,8 +21,9 @@ var uid = null;
 //if user is currently not logged in a session, they will be redirected to the log in page
 //comment out for now since this well intefere with development of the page
 onAuthStateChanged(auth, (user) => {
-  if (user) { 
+  if (user) {
     uid = user.uid;
+    resultView.getValues();
   } else {
     location.href= 'index.html'
   }
@@ -75,6 +76,7 @@ var resultView = new Vue({
           this.setPfp(this.currentUserArray['image'])
           this.getBadgeUrl(this.currentUserArray['badge'])
           this.currentUserLevel = this.currentUserArray['level']
+          console.log("values received")
         });
       },
       change_button_clicked: function() {
@@ -85,9 +87,9 @@ var resultView = new Vue({
         this.imageUrl = "images/profile_animals/" + picture
       } 
     },
-    beforeMount(){
-      setTimeout(() => this.getValues(), 500);
-   }
+  //   beforeMount(){
+  //     setTimeout(() => this.getValues(), 500);
+  //  }
 })
 
 

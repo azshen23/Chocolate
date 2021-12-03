@@ -29,6 +29,7 @@ function orderBySubKey( input, key ) {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     uid = user.uid;
+    resultView.getValues();
   } else {
     location.href= 'index.html'
   }
@@ -79,7 +80,7 @@ var resultView = new Vue({
           this.currentUserPfpUrl = "images/profile_animals/" + this.currentUserArray['image']
         }
     },
-    beforeMount(){
-      setTimeout(() => this.getValues(), 500);
-   }
+  //   beforeMount(){
+  //     setTimeout(() => this.getValues(), 500);
+  //  }
 })

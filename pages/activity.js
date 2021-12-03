@@ -23,7 +23,9 @@ const db = getDatabase();
 //comment out for now since this well intefere with development of the page
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    console.log("user changed")
     uid = user.uid;
+    resultView.getValues();
   } else {
     location.href= 'index.html'
   }
@@ -32,10 +34,10 @@ onAuthStateChanged(auth, (user) => {
 
 // GTA San Andreas Mission Passed Theme
 // https://www.youtube.com/watch?v=7lsdJDiJ0QE
-var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
+// var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
 // Undertale Soundtrack - Determination
 // https://www.youtube.com/watch?v=h1wSPmlZV-w
-var determination = new Audio("../sound/Determination.mp3");
+// var determination = new Audio("../sound/Determination.mp3");
 
 
 // Motivational Speech for the user
@@ -631,7 +633,6 @@ window.resultView = new Vue({
     }
   },
   mounted() {
-    this.getValues();
     // shuffle the texts
     // start the text animation
     StartTextAnimation(0, "motivation");
