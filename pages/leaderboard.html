@@ -92,15 +92,15 @@
     <div class = "align-items-center flex-column mt-3 d-flex leaderboard">  
         <table class="table table-striped border" style = "width: 60%;"> 
             <tbody>
-                <tr v-for="(result, index) in leaderboardArray">
+                <tr v-for="(result, index) in leaderboardArray" v-bind:class="index === currentUserPosition ? 'table-success' : ''">
                     <th scope="row">{{ index + 1 }}</th>
                     <td> <img id = "pfpSrc" v-bind:src = "result.image"></td>
-                    <td>{{ result && result.name }}</td>
+                    <td>{{ result && result.name }} {{index === currentUserPosition ? '(You)' : ''}}</td>
                     <td> <img id = "badgeSrc" v-bind:src = "result.badge"></td>
                     <td>Level: {{ result && result.level}} </td>
                     <td>{{ result && result.points }} points </td>
                 </tr>
-                <tr v-show="leaderboardArray" class="table-success">
+                <tr v-show="leaderboardArray && currentUserPosition + 1 > 10" class="table-success">
                     <th scope="row">{{currentUserPosition + 1}}</th>
                     <td> <img id = "pfpSrc" v-bind:src = "currentUserPfpUrl"></td>
                     <td>{{ currentUserArray && currentUserArray.name }} (You)</td>

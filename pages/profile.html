@@ -122,8 +122,10 @@ body {
         <div id="points">
             <h5> {{ currentUserArray ? (100 - currentUserArray.points % 100) : '' }} points until next level</h5>
             <div class="progress border border-primary" style="height: 25px">
-                <div class="progress-bar progress-bar-striped progress-bar-animated active" role="progressbar" v-bind:style="currentUserArray && {'width': currentUserArray.points % 100 + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100"></div>
-                <span style="font-size: 15px;">current earned: {{ currentUserArray ? (currentUserArray.points % 100) : '' }} / 100</span>
+                <div class="progress-bar progress-bar-striped progress-bar-animated active" style="font-size: 15px;" role="progressbar" v-bind:style="currentUserArray && {'width': currentUserArray.points % 100 + '%'}" :aria-valuenow="currentUserPoints" aria-valuemin="0" aria-valuemax="100">
+                    <span v-show="currentUserArray && currentUserArray.points % 100 > 50"> Current Points: {{ currentUserArray ? (currentUserArray.points % 100) : '' }} / 100 </span>
+                </div>
+                <span v-show="currentUserArray && currentUserArray.points % 100 <= 50" style="font-size: 15px;"> Current Points: {{ currentUserArray ? (currentUserArray.points % 100) : '' }} / 100 </span>
             </div>
         </div>
         <button type="button" class="btn btn-outline-danger signOut" v-on:click="signOut" style ="margin-top: 20px">Signout</button>
