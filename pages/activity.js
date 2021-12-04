@@ -34,10 +34,12 @@ onAuthStateChanged(auth, (user) => {
 
 // GTA San Andreas Mission Passed Theme
 // https://www.youtube.com/watch?v=7lsdJDiJ0QE
-// var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
+var mission_passed_sound = new Audio("../sound/Mission-passed.mp3");
+mission_passed_sound.volume = 0;
 // Undertale Soundtrack - Determination
 // https://www.youtube.com/watch?v=h1wSPmlZV-w
-// var determination = new Audio("../sound/Determination.mp3");
+var determination = new Audio("../sound/Determination.mp3");
+determination.volume = 0;
 
 
 // Motivational Speech for the user
@@ -185,6 +187,7 @@ window.resultView = new Vue({
     distance: null,
     watchId: null,
     locationOn: false,
+    soundOn: false,
     // another map for when user selected a currentTask
     currentTaskMap: null,
     // user data
@@ -196,6 +199,19 @@ window.resultView = new Vue({
     timestampTaskStart: null,
   },
   methods: {
+    toggle_sound: function() {
+      if (this.soundOn) {
+        this.soundOn = false;
+        mission_passed_sound.volume = 0;
+        determination.volume = 0;
+      }
+      else {
+        this.soundOn = true;
+        mission_passed_sound.volume = 0.5;
+        determination.volume = 0.5;
+      }
+    },
+
     getTasks: function () {
       let counter = 0;
       while (counter < 3) {
@@ -271,7 +287,7 @@ window.resultView = new Vue({
       this.closeWindow();
       this.timePassed = false;
       // display motivational speech
-      //determination.play();
+      determination.play();
       typeWriter("You cannot give up just yet...", 0, "game-over");
       setTimeout(() => typeWriter(this.currentUserArray['name'].toUpperCase().concat("!"), 0, "game-over"), 7000);
       setTimeout(() => typeWriter("Stay Determined!!!", 0, "game-over"), 14000);
@@ -397,7 +413,7 @@ window.resultView = new Vue({
     },
     completeActivity: function () {
       // play music
-      //mission_passed_sound.play()
+      mission_passed_sound.play();
       // display modal
       document.getElementById("mis-com-button").click();
       // reset internal data
@@ -481,6 +497,7 @@ window.resultView = new Vue({
         position: place.geometry.location,
         animation: google.maps.Animation.DROP,
         title: "Activity",
+        label: whichMap === this.map ? { color: '#000000', fontWeight: 'bold', fontSize: '16px', text: 'Click Me' } : null
       });
       // recompute distance between user and activity
       // refocus map
@@ -511,7 +528,6 @@ window.resultView = new Vue({
         this.infowindow.open({
           anchor: this.activityMarker,
           map: whichMap,
-          shouldFocus: false,
         });
       });
     },

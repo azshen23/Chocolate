@@ -134,6 +134,10 @@
         <div v-show="!currentUserArray" class="text-center">
             <img id="loading-img" src="images/loading.gif" alt="loading..." />
         </div>
+        <div v-show="currentUserArray" class="float-right">
+            <img v-show="soundOn" v-on:click="toggle_sound" src="images/sound_on.png" style="height: 20%; width: 20%;" />
+            <img v-show="!soundOn" v-on:click="toggle_sound" src="images/sound_off.png" style="height: 20%; width: 20%;" />
+        </div>
         <div v-show="currentUserArray" class="flx text-center">
             <h1 v-show="!taskCompleted[0] || !taskCompleted[1] || !taskCompleted[2]">
                 {{ currentTask === null ? " Today's Missions" : "Current Mission" }}
@@ -244,6 +248,7 @@
                         <h2 class="modal-title text-center" id="exampleModalLabel">
                             <img class="mis-com" src="images/mission_complete.png" />
                         </h2>
+                        <div class="text-center" style="font-size: small;"> Click anywhere outside this box to continue. </div>
                     </div>
                 </div>
             </div>
@@ -295,6 +300,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <strong id="game-over"></strong>
+                        <div class="text-center" style="font-size: small;"> Click anywhere outside this box to continue. </div>
                     </div>
                 </div>
             </div>
