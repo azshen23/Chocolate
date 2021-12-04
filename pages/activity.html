@@ -177,7 +177,7 @@
             </div>
             <div v-show="currentTask !== null" style="margin-bottom: 0px;">
                 <div v-bind:class="(currentTask !== null ? 'btn btn-outline-success' : '')" type="button"
-                    v-on:click="checkTimeComplete" data-toggle="modal" data-target="#self-complete">
+                    data-toggle="modal" data-target="#self-complete">
                     I Completed the Mission
                 </div>
                 <div v-bind:class="(currentTask !== null ? 'btn btn btn-outline-danger' : '')" type="button"
@@ -260,8 +260,8 @@
                 <div class="modal-content">
                     <div v-show="!timePassed" class="modal-body text-center">
                         <p> Our location shows that you haven't completed the mission yet. </p>
-                        <p> Come back in {{ minutesLeft }}:{{ secondsLeft }} minutes (time gate is lowered to 2 minutes
-                            for demonstration purposes, 30 minutes usually)</p>
+                        <p> Come back in {{ minutesLeft }}:{{ secondsLeft }} minutes (time gate lowered to 2 minutes
+                            for demo; 30 minutes usually)</p>
                         <p> Mission will autocomplete upon arrival at mission location</p>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> Close </button>
                     </div>

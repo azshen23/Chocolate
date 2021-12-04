@@ -196,6 +196,7 @@ window.resultView = new Vue({
     timePassed: false,
     minutesLeft: null,
     secondsLeft: null,
+    intervalID: null,
     timestampTaskStart: null,
   },
   methods: {
@@ -281,11 +282,14 @@ window.resultView = new Vue({
       this.clickedTask = null;
       // Add new map for the functionality of user accepting the challenge
       this.showActivity(this.currentTaskMap);
+      // update time every second
+      this.intervalID = setInterval(this.checkTimeComplete, 1000);
     },
 
     cancelTask: function () {
       this.closeWindow();
       this.timePassed = false;
+      clearInterval(this.intervalID);
       // display motivational speech
       determination.play();
       typeWriter("You cannot give up just yet...", 0, "game-over");
@@ -400,15 +404,18 @@ window.resultView = new Vue({
       this.distance = dist / 1609;
     },
     checkTimeComplete: function(){
+      console.log("1 second passed");
       // check for <= 30 minutes
       const currentTime = Date.now();
       if (currentTime > this.timestampTaskStart + 120000)
       {
         this.timePassed = true;
+        clearInterval(this.intervalID);
+        return;
       }
       else{
         this.minutesLeft = Math.floor((120000 - (currentTime - this.timestampTaskStart)) / 60000);
-        this.secondsLeft = (((120000 - (currentTime - this.timestampTaskStart)) % 60000) / 1000).toFixed(0)
+        this.secondsLeft = (((120000 - (currentTime - this.timestampTaskStart)) % 60000) / 1000).toFixed(0);
       }
     },
     completeActivity: function () {
@@ -631,11 +638,14 @@ window.resultView = new Vue({
         this.taskCompleted[0] = this.currentUserArray['task1Completed'];
         this.taskCompleted[1] = this.currentUserArray['task2Completed'];
         this.taskCompleted[2] = this.currentUserArray['task3Completed'];
+        // user has accepted a mission
         if (this.currentUserArray['currentTaskID'] != -1)
         {
           this.currentTask = this.currentUserArray['currentTaskID'];
           this.placeId = this.allTasks[this.currentTask].location;
           this.showActivity(this.currentTaskMap);
+          this.timestampTaskStart = this.currentUserArray['timestampTaskStart'];
+          this.intervalID = setInterval(this.checkTimeComplete, 1000);
         }
       }
       // user image
@@ -645,7 +655,6 @@ window.resultView = new Vue({
         //origin: new google.maps.Point(0,0), // origin
         //anchor: new google.maps.Point(0, 0) // anchor
       };
-      this.timestampTaskStart = this.currentUserArray['timestampTaskStart']
     }
   },
   mounted() {
